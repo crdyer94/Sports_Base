@@ -1,6 +1,9 @@
 """Models and database functions for Sports Base."""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Email, Length
 
 db = SQLAlchemy()
 
@@ -17,17 +20,42 @@ class User(db.Model):
                         autoincrement=True,
                         primary_key=True)
     email = db.Column(db.String(64),
-                        nullable=False)
+                        nullable=False,
+                        unique=True)
     password = db.Column(db.String(64), 
                         nullable=False)
     user_name = db.Column(db.String(64),
-                            nullable=False)
+                            nullable=False, 
+                            unique=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
         return f"""<User user_id={self.user_id}, 
                     email={self.email}>"""
+
+class LoginForm(FlaskForm):
+    """Account management fields for user login"""
+    username = StringField('Username',
+                            validators = [InputRequired(),
+                                            Length(max=64)])
+    password = PasswordField('Password',
+                            validators = [InputRequired(),
+                                            Length(max=64)])
+    remember = BooleanField('Remember Me')
+
+class RegisterForm(FlaskForm):
+    """Account management fields for user registration"""
+    email = StringField('Email', 
+                        validators=[InputRequired(),
+                                    Email(message = 'Invalid email'),
+                                    Length(max=64)])
+    username = StringField('Username',
+                            validators = [InputRequired(),
+                                            Length(max=64)])
+    password = PasswordField('Password',
+                            validators = [InputRequired(),
+                                            Length(max=64)])
 
 # class Report(db.Model):
 #     """Reports submitted by users."""
@@ -76,71 +104,7 @@ class User(db.Model):
 
 #         return f"<Favorite favorite_id={favorite_id}"
 
-# class Team(db.Model):
-#     """Team profiles"""
 
-#     __tablename__ = "teams"
-
-#     team_id = db.Column(db.Integer, 
-#                         autoincrement=True,
-#                         primary_key=True)
-#     team_name = db.Column(db.String(64), 
-#                             nullable=False)
-#     arena_name = db.Column(db.String(64), 
-#                             nullable=False)
-#     arena_location = db.Column() #is this a map object, tuple??
-#     owner = db.Colummn(db.String(64))
-#     sport = db.Column(db.String(64), 
-#                         nullable=False) 
-#     league = db.Column(db.String(64), 
-#                         nullable = False) 
-#     team_abbreviation = db.Column(db.String(10))
-
-#     def __repr__(self):
-#         """Provides helpful representation when printed."""
-
-#         return f"<Team team_id={team_id}, team_name = {team_name}>"
-
-
-# class TeamRoster(db.Model):
-#     """Association table between team records and roster records"""
-
-#     __tablename__ = "teamRosters"
-
-#     teamRoster_id = db.Column(db.Integer, 
-#                                 autoincrement=True,
-#                                 primary_key=True)
-#     team_id = db.Column(db.Integer, 
-#                             nullable=False) #FK NEEDED
-#     roster_id = db.Column(db.Integer,
-#                             nullable=False) #FK NEEDED
-#      def __repr__(self):
-#         """Provides helpful representation when printed."""
-
-#         return f"<Team Roster teamRoster_id = {teamRoster_id}, team_id={team_id}>"
-
-
-# class Roster(db.Model):
-#     """Roster records using athlete and team data"""
-
-#     __tablename__ = "rosters"
-
-#     roster_id = db.Column(db.Integer,
-#                             autoincrement=True,
-#                             primary_key=True)
-#     season_duration = db.Column(????,
-#                                 nullable=False) #daterange???
-#     jersey_number = db.Column(db.Integer)
-#     player_position = db.Column(db.String(64))
-
-#     def __repr__(self):
-#         """Provides helpful representation when printed."""
-
-#         return f"<Roster roster_id = {roster_id}, season  = {season_duration}>"
-
-
-
-# IDK WHAT TO DO ABOUT BELOW:::::::::
 #####################################################################
 # Helper functions
 
