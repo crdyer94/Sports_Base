@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_boostrap import Bootstrap
+from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
@@ -38,15 +38,18 @@ def index():
 
     return render_template('index.html') 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def logIn():
 
     form = loginForm()
 
+    if form.validate_on_submit():
+        return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
+
     return render_template('login.html',
                             form=form)
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signUp():
 
     form = registerForm()
@@ -58,3 +61,14 @@ def signUp():
 def dashboard():
 
     return render_template('dashboard.html')
+
+
+if __name__ == '__main__':
+    app.debug = True
+    # app.jinja_env.auto_reload = app.debug
+
+    # connect_to_db(app)
+
+    # DebugToolbarExtension(app)
+
+    app.run(port=5000, host='0.0.0.0')

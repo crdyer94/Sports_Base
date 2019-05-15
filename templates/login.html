@@ -1,5 +1,5 @@
 {% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf/html" as wtf %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
 Login
@@ -8,7 +8,7 @@ Login
 {% block styles %}
 <!-- look up what this does if not covered in self study or online research -->
 { {super()} }
-<link rel="stylesheet" href="{{url_for(.'static', filename = 'signin.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename = 'signin.css')}}">
 {% endblock%}
 
 {% block content %}
@@ -19,7 +19,7 @@ Login
 
             <h2 class="form_signin_heading">Please sign in</h2>
             {{ form.hidden_tag() }}
-            {{ wtf.form_field(form.email) }}
+            {{ wtf.form_field(form.username) }}
             {{ wtf.form_field(form.password) }}
             {{ wtf.form_field(form.remember) }}
             <button calss = "btn-lg btn-primary btn-block" type="submit">Sign in</button>
