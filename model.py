@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
-from werkzeug.security import generate_password_has, check_password_hash
+from flask_login import LoginManager, UserMixin
+
 
 db = SQLAlchemy()
 
@@ -12,7 +13,7 @@ db = SQLAlchemy()
 #####################################################################
 # Model definitions
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """User of ratings website."""
 
     __tablename__ = "users"
@@ -35,6 +36,7 @@ class User(db.Model):
         return f"""<User user_id={self.user_id}, 
                     email={self.email}>"""
 
+
 class LoginForm(FlaskForm):
     """Account management fields for user login"""
     username = StringField('Username',
@@ -44,6 +46,10 @@ class LoginForm(FlaskForm):
                             validators = [InputRequired(),
                                             Length(max=64)])
     remember = BooleanField('Remember Me')
+
+    def render_field(self, field, render_kw):
+            render_kw.setdefault('required', True)
+            return super().render_field(field, render_kw)
 
 class RegisterForm(FlaskForm):
     """Account management fields for user registration"""
@@ -57,6 +63,9 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password',
                             validators = [InputRequired(),
                                             Length(max=64)])
+    def render_field(self, field, render_kw):
+            render_kw.setdefault('required', True)
+            return super().render_field(field, render_kw)
 
 # class Report(db.Model):
 #     """Reports submitted by users."""

@@ -4,20 +4,28 @@ from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (User, LoginForm, RegisterForm, connect_to_db, db)
 from sqlalchemy import update
-from werkzeug.security import generate_password_has, check_password_hash
-from flask_login import (LoginManager, UserMixin, login_user, login_required, logout_user, current_user)
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123'
 app.jinja_env.undefined = StrictUndefined
 Bootstrap(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 
 @app.route('/')
 def index():
 
     return render_template('index.html') 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 #WHY USE BOTH GET AND POST
@@ -29,13 +37,15 @@ def logIn():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if check_password_hash(user.password.data):
+                login_user(user, remember=form.data)
                 return redirect('/dashboard')
-        return '<h1> Invalid username or password </h1>'
+        # return '<h1> Invalid username or password </h1>'
     #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
     #test to make sure that I am posting data and getting data from the form
 
     return render_template('login.html',
                             form=form)
+                            # required="")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signUp():
@@ -59,9 +69,16 @@ def signUp():
                             form=form)
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
 
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', name = current_user.username)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 if __name__ == '__main__':
