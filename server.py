@@ -4,7 +4,6 @@ from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (User, LoginForm, RegisterForm, connect_to_db, db)
 from sqlalchemy import update
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
 
 
@@ -23,8 +22,9 @@ def index():
     return render_template('index.html') 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def load_user(id):
+    print("The load_user function is getting to this line")
+    return User.query.get(int(id))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -36,8 +36,9 @@ def logIn():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
-            if check_password_hash(user.password.data):
+            if user.password == form.password.data:
                 login_user(user, remember=form.data)
+                flash('You are logged in!')
                 return redirect('/searchpage')
         # return '<h1> Invalid username or password </h1>'
     #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
@@ -47,19 +48,19 @@ def logIn():
                             form=form)
                             # required="")
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signUp():
 
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method= 'sha256')
         new_user = User(username=form.username.data,
                         email=form.email.data,
-                        password=hashed_password)
+                        password=form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        return redirect('/searchpage')
+        return render_template('searchpage.html')
 
         # return '<h1> new user has been created </h1>'
         #test to make sure that a new user is being created and added to my db
@@ -73,7 +74,7 @@ def signUp():
 @login_required
 def searchPage():
 
-    return render_template('searchpage.html', name = current_user.username)
+    return render_template('searchpage.html')
 
 @app.route('/logout')
 @login_required
@@ -85,7 +86,8 @@ def logout():
 if __name__ == '__main__':
     #setting debug to true to invoke the DebugToolBarExtension
     app.debug = True
-    app.jinja_env.auto_reload = app.debug
+    connect_to_db(app)
+    # app.jinja_env.auto_reload = app.debug
 
     #Use the DebugToolbar
     DebugToolbarExtension(app)

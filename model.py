@@ -18,7 +18,7 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     email = db.Column(db.String(64),
@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"""<User user_id={self.user_id}, 
+        return f"""<User user_id={self.id}, 
                     email={self.email}>"""
 
 
@@ -75,8 +75,8 @@ class Report(db.Model):
     report_id = db.Column(db.Integer,
                          autoincrement=True,
                          primary_key=True)
-    user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.user_id'))
+    id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'))
     report_description = db.Column(db.String(500), 
                                     nullable=False)
     report_submit_date = db.Column(db.DateTime)
@@ -89,7 +89,7 @@ class Report(db.Model):
         """Provide helpful representation when printed."""
 
         return f"""<Report report_id={self.report_id},
-                    user_id={self.user_id}, 
+                    user_id={self.id}, 
                     description={self.report_description}, 
                     submitted on {report_submit_date}>"""
 
@@ -101,8 +101,8 @@ class Favorite(db.Model):
     favorite_id = db.Column(db.Integer, 
                             autoincrement=True, 
                             primary_key=True)
-    user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.user_id'))
+    id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'))
     # athlete_id = db.Column(db.Integer,
     #                         db.ForeignKey('athletes.athlete_id'),
     #                         nullable=True) 
