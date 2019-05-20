@@ -26,7 +26,7 @@ class User(UserMixin, db.Model):
                         unique=True)
     password = db.Column(db.String(64), 
                         nullable=False)
-    user_name = db.Column(db.String(64),
+    username = db.Column(db.String(64),
                             nullable=False, 
                             unique=True)
 
@@ -67,52 +67,52 @@ class RegisterForm(FlaskForm):
             render_kw.setdefault('required', True)
             return super().render_field(field, render_kw)
 
-# class Report(db.Model):
-#     """Reports submitted by users."""
+class Report(db.Model):
+    """Reports submitted by users."""
 
-#     __tablename__ = "reports"
+    __tablename__ = "reports"
 
-#     report_id = db.Column(db.Integer,
-#                          autoincrement=True,
-#                          primary_key=True)
-#     user_id = db.Column(db.Integer,
-#                         db.ForeignKey('users.user_id'))
-#     report_description = db.Column(db.String(500), 
-#                                     nullable=False)
-#     report_submit_date = db.Column(db.DateTime)
+    report_id = db.Column(db.Integer,
+                         autoincrement=True,
+                         primary_key=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'))
+    report_description = db.Column(db.String(500), 
+                                    nullable=False)
+    report_submit_date = db.Column(db.DateTime)
 
-#     user = db.relationship("User",
-#                             backref = db.backref("reports",
-#                                                 order_by=report_id))
+    user = db.relationship("User",
+                            backref = db.backref("reports",
+                                                order_by=report_id))
 
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
+    def __repr__(self):
+        """Provide helpful representation when printed."""
 
-#         return f"""<Report report_id={self.report_id},
-#                     user_id={self.user_id}, 
-#                     description={self.report_description}, 
-#                     submitted on {report_submit_date}>"""
+        return f"""<Report report_id={self.report_id},
+                    user_id={self.user_id}, 
+                    description={self.report_description}, 
+                    submitted on {report_submit_date}>"""
 
-# class Favorite(db.Model):
-#     """Athlete or team profiles favorited by a user"""
+class Favorite(db.Model):
+    """Athlete or team profiles favorited by a user"""
 
-#     __tablename__ = "favorites"
+    __tablename__ = "favorites"
 
-#     favorite_id = db.Column(db.Integer, 
-#                             autoincrement=True, 
-#                             primary_key=True)
-#     user_id = db.Column(db.Integer,
-#                         db.ForeignKey('users.user_id'))
-#     athlete_id = db.Column(db.Integer,
-#                             db.ForeignKey('athletes.athlete_id'),
-#                             nullable=True) 
-#     team_id = db.Column(db.Integer, nullable=True) #SAME AS ABOVE
+    favorite_id = db.Column(db.Integer, 
+                            autoincrement=True, 
+                            primary_key=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'))
+    # athlete_id = db.Column(db.Integer,
+    #                         db.ForeignKey('athletes.athlete_id'),
+    #                         nullable=True) 
+    # team_id = db.Column(db.Integer, nullable=True) #SAME AS ABOVE
     
 
-#     def __repr__(self):
-#         """Provides helpful representation when printed."""
+    def __repr__(self):
+        """Provides helpful representation when printed."""
 
-#         return f"<Favorite favorite_id={favorite_id}"
+        return f"<Favorite favorite_id={favorite_id}"
 
 
 #####################################################################

@@ -59,6 +59,7 @@ def signUp():
                         password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
+        return redirect('/searchpage')
 
         # return '<h1> new user has been created </h1>'
         #test to make sure that a new user is being created and added to my db
