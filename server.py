@@ -38,7 +38,6 @@ def logIn():
         if user:
             if user.password == form.password.data:
                 login_user(user, remember=form.data)
-                flash('You are logged in!')
                 return redirect('/searchpage')
         # return '<h1> Invalid username or password </h1>'
     #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
@@ -80,7 +79,7 @@ def searchPage():
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
