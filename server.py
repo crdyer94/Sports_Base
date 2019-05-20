@@ -38,7 +38,7 @@ def logIn():
         if user:
             if check_password_hash(user.password.data):
                 login_user(user, remember=form.data)
-                return redirect('/dashboard')
+                return redirect('/searchpage')
         # return '<h1> Invalid username or password </h1>'
     #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
     #test to make sure that I am posting data and getting data from the form
@@ -68,11 +68,11 @@ def signUp():
     return render_template('signup.html', 
                             form=form)
 
-@app.route('/dashboard')
+@app.route('/searchpage')
 @login_required
-def dashboard():
+def searchPage():
 
-    return render_template('dashboard.html', name = current_user.username)
+    return render_template('searchpage.html', name = current_user.username)
 
 @app.route('/logout')
 @login_required
