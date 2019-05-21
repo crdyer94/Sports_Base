@@ -1,3 +1,5 @@
+import os
+import requests
 from flask import (Flask, render_template, redirect, request, flash, session)
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
@@ -15,14 +17,25 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+MYSPORTSFEED_TOKEN = 
+MYSPORTSFEED_URL =
+TWITTER_TOKEN = 
+TWITTER_URL = 
+NFLARRESTS_TOKEN = 
+NFLARRESTS_URL = 
+
+USER_ID = "crdyer94"
+
 
 @app.route('/')
 def index():
+    """Show login page"""
 
     return render_template('index.html') 
 
 @login_manager.user_loader
 def load_user(id):
+    """ NEED DOCSTRING HERE"""
     print("The load_user function is getting to this line")
     return User.query.get(int(id))
 
@@ -30,6 +43,7 @@ def load_user(id):
 @app.route('/login', methods=['GET', 'POST'])
 #WHY USE BOTH GET AND POST
 def logIn():
+    """ Validating entered user info with the DB"""
 
     form = LoginForm()
 
@@ -50,6 +64,7 @@ def logIn():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signUp():
+    """Adding a new user to the DB"""
 
     form = RegisterForm()
 
@@ -72,12 +87,15 @@ def signUp():
 @app.route('/searchpage')
 @login_required
 def searchPage():
+    """Displays the searchpage. This is the user's homepage"""
 
     return render_template('searchpage.html')
 
 @app.route('/logout')
 @login_required
 def logout():
+    """Logs out the user"""
+    
     logout_user()
     return render_template('index.html')
 
