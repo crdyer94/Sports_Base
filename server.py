@@ -1,6 +1,5 @@
-import os
-import requests
 from flask import (Flask, render_template, redirect, request, flash, session)
+import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
@@ -15,16 +14,7 @@ app.jinja_env.undefined = StrictUndefined
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
-
-MYSPORTSFEED_TOKEN = 
-MYSPORTSFEED_URL =
-TWITTER_TOKEN = 
-TWITTER_URL = 
-NFLARRESTS_TOKEN = 
-NFLARRESTS_URL = 
-
-USER_ID = "crdyer94"
+login_manager.login_view = 'logIn'
 
 
 @app.route('/')
@@ -36,7 +26,7 @@ def index():
 @login_manager.user_loader
 def load_user(id):
     """ NEED DOCSTRING HERE"""
-    print("The load_user function is getting to this line")
+    # print("The load_user function is getting to this line")
     return User.query.get(int(id))
 
 
@@ -90,6 +80,12 @@ def searchPage():
     """Displays the searchpage. This is the user's homepage"""
 
     return render_template('searchpage.html')
+
+@app.route('/searchresults', methods=['POST'])
+def searchResults():
+    
+    return render_template('searchresults.html')
+
 
 @app.route('/logout')
 @login_required

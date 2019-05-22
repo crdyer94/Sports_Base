@@ -1,10 +1,17 @@
 {% extends 'bootstrap/base.html' %}
 {% block content %}
 
-<h2>HELLO THIS IS THE SEARCH PAGE</h2>
+
+    <p> <a href='/logout'>Log Out</a></p>
+    
+    <form method = "POST" action = "/searchresults">
+        Player Name: <input type="text" name="playername">
+        <input type="submit">
+        
+    </form>
 
 
-<p> <a href='/logout'>Log Out</p>
+
 
 
 
