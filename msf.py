@@ -25,8 +25,11 @@ def get_search_results(playername):
         firstname = obj["firstName"]
         lastname = obj["lastName"]
         fullname = firstname + " " + lastname
-        
-        response_display.append(fullname)
+        athlete_id = obj["id"]
+        athlete_route = {athlete_id:fullname}
+
+
+        response_display.append(athlete_route)
 
 
     # print(MYSPORTSFEED_PASS)
@@ -34,3 +37,11 @@ def get_search_results(playername):
 
     return response_display
 
+
+
+# get the athlete_id, the first name, the last name from the API
+# create dictionary as athlete_id: fullname
+# add to list of results
+# return list of dictionaries to server
+# on server display fullname on screen
+# when user clicks fullname, we route to a profile page for that specific athlete_id

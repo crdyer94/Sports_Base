@@ -11,8 +11,9 @@
   <ul>
     {% for player in playername %}
       <li>
-         
-          {{ player }}
+         {% for name in player.values() %}
+            {{  name  }}
+         {% endfor %}
           
         </a>
       </li>
