@@ -94,6 +94,12 @@ def searchResults():
     return render_template('searchresults.html',
                             playername=playername)
 
+@app.route('/athletes/<athlete_id>')
+def displayAthleteInfo(athlete_id):
+    """Athlete profile page"""
+
+    return render_template('athlete.html')
+
 
 @app.route('/logout')
 @login_required

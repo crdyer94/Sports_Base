@@ -11,8 +11,10 @@
   <ul>
     {% for player in playername %}
       <li>
-         {% for name in player.values() %}
+         {% for athlete_id, name in player.items() %}
+            <a href="/athletes/{{ athlete_id }}">
             {{  name  }}
+            </a>
          {% endfor %}
           
         </a>
@@ -24,3 +26,4 @@
 
 </body>
 </html>
+
