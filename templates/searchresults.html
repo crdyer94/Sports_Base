@@ -5,8 +5,21 @@
 </head>
 <body>
 
-    <h1> This needs to be a list of the results with the following player's name: {{ playername }} </h1>
-    <p> <a href='/searchpage'>Back to Search</a></p>
+    <h1> Results </h1>
+    
+
+  <ul>
+    {% for player in playername %}
+      <li>
+         
+          {{ player }}
+          
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+<p> <a href='/searchpage'>Back to Search</a></p>
 
 </body>
 </html>

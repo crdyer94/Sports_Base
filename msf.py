@@ -24,11 +24,10 @@ def get_search_results(playername):
         obj = obj["player"]
         firstname = obj["firstName"]
         lastname = obj["lastName"]
-        fullname = firstname + lastname
+        fullname = firstname + " " + lastname
+        athlete_id = obj["id"]
 
         response_display.append(fullname)
-
-
 
 
     # print(MYSPORTSFEED_PASS)
