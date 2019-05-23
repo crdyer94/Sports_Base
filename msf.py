@@ -25,8 +25,7 @@ def get_search_results(playername):
         firstname = obj["firstName"]
         lastname = obj["lastName"]
         fullname = firstname + " " + lastname
-        athlete_id = obj["id"]
-
+        
         response_display.append(fullname)
 
 
