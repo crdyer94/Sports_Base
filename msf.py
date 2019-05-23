@@ -45,3 +45,17 @@ def get_search_results(playername):
 # return list of dictionaries to server
 # on server display fullname on screen
 # when user clicks fullname, we route to a profile page for that specific athlete_id
+
+
+
+def get_athlete_info(athlete_id):
+    """Gets a player's API info to display on that player's profile page"""
+
+    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+
+    response = requests.get(SPORTSFEED_URL + f"?player={athlete_id}",
+         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+    response_display=response.json()
+
+    return response_display
+
