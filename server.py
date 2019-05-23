@@ -6,6 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import (User, LoginForm, RegisterForm, connect_to_db, db)
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required, logout_user, current_user)
+from msf import get_search_results
 
 
 app = Flask(__name__)
@@ -31,7 +32,6 @@ def load_user(id):
 
 
 @app.route('/login', methods=['GET', 'POST'])
-#WHY USE BOTH GET AND POST
 def logIn():
     """ Validating entered user info with the DB"""
 
@@ -83,8 +83,15 @@ def searchPage():
 
 @app.route('/searchresults', methods=['POST'])
 def searchResults():
-    
-    return render_template('searchresults.html')
+
+    playername = request.form['playername']
+
+    playername = get_search_results(playername)
+
+    # return player_name: Test to verify request.form
+
+    return render_template('searchresults.html',
+                            playername=playername)
 
 
 @app.route('/logout')
