@@ -22,9 +22,7 @@ def get_search_results(playername):
     response_display = []
     for obj in response["players"]:
         obj = obj["player"]
-        firstname = obj["firstName"]
-        lastname = obj["lastName"]
-        fullname = firstname + " " + lastname
+        fullname = obj.get("firstName") + " " + obj.get("lastName")
         athlete_id = obj["id"]
         athlete_route = {athlete_id:fullname}
 
@@ -56,23 +54,40 @@ def get_athlete_info(athlete_id):
     response = requests.get(SPORTSFEED_URL + f"?player={athlete_id}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
     response=response.json()
-    # athlete_profile_info = []
-    player=response.items()
 
-    # for item in response["players"]:
-    #     player = item["player"]
-    #     firstname = player["firstName"]
-    #     lastname = player["lastName"]
-    #     primaryPosition = [player["primaryPosition"], player["alternatePositions"]]
+    response_players_dict = response.get("players")[0]
+    player_dict = response_players_dict.get("player")
+    player_profile = {
+    "fullname": player_dict.get("firstName") + " " +
+                player_dict.get("lastName"), 
+    "position": player_dict.get("primaryPosition"),
+    "h/weight": player_dict.get("height") + ", "+ 
+                str(player_dict.get("weight")) + "lbs",
+    "bday": player_dict.get("birthDate") + ", " + player_dict.get("birthCity"),
+    "age": player_dict.get("age"),
+    "highschool": player_dict.get("highSchool"),
+    "college": player_dict.get("college"),
+    "rosterpic": player_dict.get("officialImageSrc")
+
+    }
 
 
-    return player
+
+    return player_profile
+
+ 
 
 
 
 
 
+# Team Stuff
+#  player_dict{'jerseyNumber': 12, 'currentTeam': {'id': 50, 'abbreviation': 'NE'}, 
+#  player_dict{'teamAsOfDate': {'id': 50, 'abbreviation': 'NE'}
 
+
+# Player stuff to loop specifically
+# # 'currentRosterStatus': 'ROSTER', 'currentInjury': None,
 
 
 
