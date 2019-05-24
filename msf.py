@@ -62,7 +62,7 @@ def get_athlete_info(athlete_id):
                 player_dict.get("lastName"), 
     "position": player_dict.get("primaryPosition"),
     "h/weight": player_dict.get("height") + ", "+ 
-                str(player_dict.get("weight")) + "lbs",
+                str(player_dict.get("weight")) + " lbs",
     "bday": player_dict.get("birthDate") + ", " + player_dict.get("birthCity"),
     "age": player_dict.get("age"),
     "highschool": player_dict.get("highSchool"),
