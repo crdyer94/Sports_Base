@@ -55,7 +55,52 @@ def get_athlete_info(athlete_id):
 
     response = requests.get(SPORTSFEED_URL + f"?player={athlete_id}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    response_display=response.json()
+    response=response.json()
+    # athlete_profile_info = []
+    player=response.items()
 
-    return response_display
+    # for item in response["players"]:
+    #     player = item["player"]
+    #     firstname = player["firstName"]
+    #     lastname = player["lastName"]
+    #     primaryPosition = [player["primaryPosition"], player["alternatePositions"]]
+
+
+    return player
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
