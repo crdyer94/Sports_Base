@@ -102,5 +102,9 @@ def get_stats(athlete_id):
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
     response=response.json()
 
-    return response
+    response_stats_info = response.get("playerStatsTotals")[0]
+    player_stats = response_stats_info.get("stats")
+
+
+    return player_stats
 
