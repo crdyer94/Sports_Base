@@ -14,15 +14,23 @@
          {% for key, item in athlete_info.items() %}
             {{  key }} : {{ item }}
             <br>
-            </a>
          {% endfor %}
-          
-        </a>
+        
   </ul>
 
   <ul>
-    {{ results }}
+      {% for item in results.items()%}
+
+      {{item}}
+      <br>
+
+      {% endfor %}
+    
+
   </ul>
+
+  {{ results }}
+
 
 <p> <a href='/searchpage'>Back to Search</a></p>
 

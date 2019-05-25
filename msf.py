@@ -83,7 +83,7 @@ def get_athlete_info(athlete_id):
 
     return player_profile
 
-def get_athlete_stats(athlete_id):
+def get_stats(athlete_id):
     """Gets the player's stats from API"""
     results = []
     available_seasons = ["2014-2015-regular",
@@ -96,14 +96,11 @@ def get_athlete_stats(athlete_id):
                           "2017-playoff",
                           "2018-playoff",
                           "2019-playoff"]
+
     Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
-
-    for season in available_seasons:
-        response = requests.get(SPORTSFEED_URL + f"{season}/player_stats_totals.json?player={athlete_id}",
+    response = requests.get(SPORTSFEED_URL + f"2019-playoff/player_stats_totals.json?player={athlete_id}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-        response=response.json()
+    response=response.json()
 
-        results.append(response)
-
-    return results
+    return response
 

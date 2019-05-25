@@ -7,7 +7,7 @@ from model import (User, LoginForm, RegisterForm, connect_to_db, db)
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
-from msf import get_search_results, get_athlete_info
+from msf import get_search_results, get_athlete_info, get_stats
 
 
 app = Flask(__name__)
@@ -99,9 +99,11 @@ def displayAthleteInfo(athlete_id):
     """Athlete profile page"""
 
     athlete_info = get_athlete_info(athlete_id)
+    results = get_stats(athlete_id)
 
     return render_template('athlete.html', 
-                            athlete_info = athlete_info)
+                            athlete_info = athlete_info, 
+                            results=results)
 
 
 @app.route('/logout')
