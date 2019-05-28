@@ -86,7 +86,7 @@ def get_athlete_info(athlete_id):
 def get_stats(athlete_id):
     """Gets the player's stats from API"""
     results = []
-    playerdata = []
+    career_data = {}
     available_seasons =  ["2019-playoff", "2018-2019-regular",
                             "2018-playoff", "2017-2018-regular"]
     available_seasons_count = 0
@@ -101,11 +101,15 @@ def get_stats(athlete_id):
         response_stats_info = response.get("playerStatsTotals")[0] #keywords of dictionaries within the API's playerStatsTotals
         player_stats = response_stats_info.get("stats") #keywords of dictionaries within the API's stats
 
-        if player_stats.get("gamesPlayed") != 0:
-            results.append(season)
-            results.append(player_stats)
+        if player_stats.get("gamesPlayed") != 0: #adds season stats in seasons the athlete played
+            career_data = {
+            "season": season,
+            "gamesPlayed": player_stats.get("gamesPlayed"),
+            "passing": player_stats.get("Passing")
+            }
+            results.append(career_data)
 
-    return results
+    return player_stats
 
 
 
