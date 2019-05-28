@@ -15,17 +15,22 @@
             {{  key }} : {{ item }}
             <br>
          {% endfor %}
+
+         <br>
+         <br>
+         <br>
+         {% for result in results %}
+
+          {{ result }}
+          <br>
+          <br>
+           {% endfor %}
         
-  </ul>
-
-  <ul>
-      {% for item in results.items()%}
-
-      {{item}}
+       
+      
       <br>
 
-      {% endfor %}
-    
+
 
   </ul>
 

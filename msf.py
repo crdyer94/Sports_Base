@@ -86,25 +86,34 @@ def get_athlete_info(athlete_id):
 def get_stats(athlete_id):
     """Gets the player's stats from API"""
     results = []
-    available_seasons = ["2014-2015-regular",
-                         "2015-2016-regular",
-                          "2016-2017-regular", 
-                          "2017-2018-regular", 
-                          "2018-2019-regular",
-                          "2015-playoff",
-                          "2016-playoff",
-                          "2017-playoff",
-                          "2018-playoff",
-                          "2019-playoff"]
+    available_seasons =  ["2019-playoff", "2018-2019-regular",
+                            "2018-playoff", "2017-2018-regular", 
+                            "2017-playoff", "2016-2017-regular", 
+                            "2016-playoff", "2015-2016-regular", 
+                            "2015-playoff", "2014-2015-regular"]
 
-    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
-    response = requests.get(SPORTSFEED_URL + f"2019-playoff/player_stats_totals.json?player={athlete_id}",
-         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    response=response.json()
+    for season in available_seasons:
 
-    response_stats_info = response.get("playerStatsTotals")[0]
-    player_stats = response_stats_info.get("stats")
+        Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+        response = requests.get(SPORTSFEED_URL + f"{season}/player_stats_totals.json?player={athlete_id}",
+             auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+        response=response.json()
+
+        response_stats_info = response.get("playerStatsTotals")[0]
+        player_stats = response_stats_info.get("stats")
+
+        if player_stats.get("gamesPlayed") != 0:
+            results.append(season)
+            results.append(player_stats)
 
 
-    return player_stats
+    results = results[1].items()
+
+
+    return results
+
+
+
+
+
 
