@@ -18,7 +18,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'logIn'
 
-
 @app.route('/')
 def index():
     """Show login page"""
@@ -27,8 +26,7 @@ def index():
 
 @login_manager.user_loader
 def load_user(id):
-    """ NEED DOCSTRING HERE"""
-    # print("The load_user function is getting to this line")
+
     return User.query.get(int(id))
 
 
@@ -49,7 +47,6 @@ def logIn():
 
     return render_template('login.html',
                             form=form)
-                            # required="")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -102,6 +99,20 @@ def displayAthleteInfo(athlete_id):
                             athlete_info = athlete_info, 
                             results=results)
 
+
+@app.route("/setcookie")
+def setCookie(athlete_id):
+    """Sets the cookie to save the favorited athlete to the signed in user"""
+    resp = make_response('Added to favs')
+
+    resp.set_cookie(id, athlete_id) #this should be a list of athlete ids to support more than one favorite?
+    return resp
+
+@app.route("/get")
+def getCookie():
+    """Gets the list of athletes favorited by the logged in user"""
+    user_favorites = request.cookies.get(id)
+    return user_favorites
 
 @app.route('/logout')
 @login_required
