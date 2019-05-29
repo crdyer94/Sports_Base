@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, redirect, request, flash, session)
+from flask import (Flask, render_template, redirect, request, make_response)
 import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
@@ -44,9 +44,8 @@ def logIn():
             if user.password == form.password.data:
                 login_user(user, remember=form.data)
                 return redirect('/searchpage')
-        # return '<h1> Invalid username or password </h1>'
-    #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
-    #test to make sure that I am posting data and getting data from the form
+ 
+    #tested to make sure that I am posting data and getting data from the form
 
     return render_template('login.html',
                             form=form)
@@ -67,10 +66,8 @@ def signUp():
         db.session.commit()
         return render_template('searchpage.html')
 
-        # return '<h1> new user has been created </h1>'
-        #test to make sure that a new user is being created and added to my db
-    # return '<h1>' + form.username.data + ' ' + ' ' + form.password.data + ' ' + form.email.data +'</h>'
-    #test to make sure taht I am posting data and getting data from the form
+        #tested to make sure that a new user is being created and added to my db
+    #tested to make sure taht I am posting data and getting data from the form
 
     return render_template('signup.html', 
                             form=form)
