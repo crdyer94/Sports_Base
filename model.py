@@ -67,31 +67,31 @@ class RegisterForm(FlaskForm):
             render_kw.setdefault('required', True)
             return super().render_field(field, render_kw)
 
-class Report(db.Model):
-    """Reports submitted by users."""
+# class Report(db.Model):
+#     """Reports submitted by users."""
 
-    __tablename__ = "reports"
+#     __tablename__ = "reports"
 
-    report_id = db.Column(db.Integer,
-                         autoincrement=True,
-                         primary_key=True)
-    id = db.Column(db.Integer,
-                        db.ForeignKey('users.id'))
-    report_description = db.Column(db.String(500), 
-                                    nullable=False)
-    report_submit_date = db.Column(db.DateTime)
+#     report_id = db.Column(db.Integer,
+#                          autoincrement=True,
+#                          primary_key=True)
+#     id = db.Column(db.Integer,
+#                         db.ForeignKey('users.id'))
+#     report_description = db.Column(db.String(500), 
+#                                     nullable=False)
+#     report_submit_date = db.Column(db.DateTime)
 
-    user = db.relationship("User",
-                            backref = db.backref("reports",
-                                                order_by=report_id))
+#     user = db.relationship("User",
+#                             backref = db.backref("reports",
+#                                                 order_by=report_id))
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-        return f"""<Report report_id={self.report_id},
-                    user_id={self.id}, 
-                    description={self.report_description}, 
-                    submitted on {report_submit_date}>"""
+#         return f"""<Report report_id={self.report_id},
+#                     user_id={self.id}, 
+#                     description={self.report_description}, 
+#                     submitted on {report_submit_date}>"""
 
 class Favorite(db.Model):
     """Athlete or team profiles favorited by a user"""
@@ -103,6 +103,9 @@ class Favorite(db.Model):
                             primary_key=True)
     id = db.Column(db.Integer,
                         db.ForeignKey('users.id'))
+    favorited_item = db.Column(db.String,
+                                nullable = False,
+                                unique = True)
     # athlete_id = db.Column(db.Integer,
     #                         db.ForeignKey('athletes.athlete_id'),
     #                         nullable=True) 
@@ -112,7 +115,9 @@ class Favorite(db.Model):
     def __repr__(self):
         """Provides helpful representation when printed."""
 
-        return f"<Favorite favorite_id={favorite_id}"
+        return f"<Favorite favorite_id={self.favorite_id}, User ID = {self.id}, athlete favorited {favorited_item} "
+
+
 
 
 #####################################################################
