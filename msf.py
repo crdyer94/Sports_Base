@@ -114,5 +114,3 @@ def get_stats(athlete_id):
 
 
 
-
-

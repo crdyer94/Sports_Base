@@ -67,31 +67,6 @@ class RegisterForm(FlaskForm):
             render_kw.setdefault('required', True)
             return super().render_field(field, render_kw)
 
-# class Report(db.Model):
-#     """Reports submitted by users."""
-
-#     __tablename__ = "reports"
-
-#     report_id = db.Column(db.Integer,
-#                          autoincrement=True,
-#                          primary_key=True)
-#     id = db.Column(db.Integer,
-#                         db.ForeignKey('users.id'))
-#     report_description = db.Column(db.String(500), 
-#                                     nullable=False)
-#     report_submit_date = db.Column(db.DateTime)
-
-#     user = db.relationship("User",
-#                             backref = db.backref("reports",
-#                                                 order_by=report_id))
-
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
-
-#         return f"""<Report report_id={self.report_id},
-#                     user_id={self.id}, 
-#                     description={self.report_description}, 
-#                     submitted on {report_submit_date}>"""
 
 class Favorite(db.Model):
     """Athlete or team profiles favorited by a user"""
@@ -106,16 +81,14 @@ class Favorite(db.Model):
     favorited_item = db.Column(db.String,
                                 nullable = False,
                                 unique = True)
-    # athlete_id = db.Column(db.Integer,
-    #                         db.ForeignKey('athletes.athlete_id'),
-    #                         nullable=True) 
-    # team_id = db.Column(db.Integer, nullable=True) #SAME AS ABOVE
+    user = db.relationship("User",
+                           backref=db.backref("favorites", order_by=favorite_id))
     
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
-        return f"<Favorite favorite_id={self.favorite_id}, User ID = {self.id}, athlete favorited {favorited_item} "
+        return f"<Favorite favorite_id={self.favorite_id}, User ID = {self.id}, athlete favorited {self.favorited_item} "
 
 
 
@@ -134,9 +107,6 @@ def connect_to_db(app):
 
 
 if __name__ == "__main__":
-    # As a convenience, if we run this module interactively, it will
-    # leave you in a state of being able to work with the database
-    # directly.
 
     from server import app
     connect_to_db(app)

@@ -1,3 +1,6 @@
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,31 +11,35 @@
     <h1> {{ athlete_info["fullname"] }}</h1>
 
     <img src = {{ athlete_info["rosterpic"] }}>
-    
-
-  <ul>
-         {% for key, item in athlete_info.items() %}
-            {{  key }} : {{ item }}
-            <br>
-         {% endfor %}
-
-         <br>
-         <br>
-         <br>
-         {% for result in results %}
-
-          {{ result }}
-          <br>
-          <br>
+    <div>
+    <ul>
+           {% for key, item in athlete_info.items() %}
+              {{  key }} : {{ item }}
+              <br>
            {% endfor %}
-        
-       
-      
-      <br>
 
+           <br>
+           <br>
+           <br>
+    </ul>
+  </div>
+  <div>
+    <ul>
+           {% for result in results %}
 
+            {{ result }}
+            <br>
+            <br>
+             {% endfor %}
 
-  </ul>
+    </ul>
+  </div>
+
+  <div>
+     <form action = "/setfavorites/{athlete_info['athlete_id']}" method="POST">
+      <input type="submit" name="favorite" value="Favorite">
+      </form>
+  </div>
 
 
 <p> <a href='/searchpage'>Back to Search</a></p>
@@ -40,5 +47,4 @@
 </body>
 </html>
 
-
-
+{% endblock %}
