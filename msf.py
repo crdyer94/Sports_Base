@@ -102,6 +102,7 @@ def get_stats(athlete_id):
         player_stats = response_stats_info.get("stats") #keywords of dictionaries within the API's stats
 
         if player_stats.get("gamesPlayed") != 0: #adds season stats in seasons the athlete played
+        #WORKING ON PARSING HERE AS OF MAY 29
             career_data = {
             "season": season,
             "gamesPlayed": player_stats.get("gamesPlayed"),

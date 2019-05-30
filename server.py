@@ -3,7 +3,7 @@ import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
-from model import (User, LoginForm, RegisterForm, connect_to_db, db)
+from model import (User, LoginForm, RegisterForm, connect_to_db, db, Favorite)
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
@@ -74,6 +74,8 @@ def signUp():
 def searchPage():
     """Displays the searchpage. This is the user's homepage"""
 
+    favorites = 
+
     return render_template('searchpage.html')
 
 @app.route('/searchresults', methods=['POST'])
@@ -100,19 +102,16 @@ def displayAthleteInfo(athlete_id):
                             results=results)
 
 
-@app.route("/setcookie")
-def setCookie(athlete_id):
-    """Sets the cookie to save the favorited athlete to the signed in user"""
-    resp = make_response('Added to favs')
+@app.route("/setfavorites/<athlete_id>", methods=['POST'])
+def setFavorite(athlete_id):
+    """Associates the user to their favorited athlete"""
 
-    resp.set_cookie(id, athlete_id) #this should be a list of athlete ids to support more than one favorite?
-    return resp
+    favorite  = Favorite(id=current_user.id, favorited_item=athlete_id)
+    db.session.add(favorite)
 
-@app.route("/get")
-def getCookie():
-    """Gets the list of athletes favorited by the logged in user"""
-    user_favorites = request.cookies.get(id)
-    return user_favorites
+    db.session.commit()
+
+    return redirect(f"/searchpage")
 
 @app.route('/logout')
 @login_required
