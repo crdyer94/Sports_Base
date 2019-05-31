@@ -8,6 +8,8 @@ from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
 from msf import get_search_results, get_athlete_info, get_stats
+# from nflarrest import get_arrests
+from twitter import get_player_tweets
 
 
 app = Flask(__name__)
@@ -74,7 +76,6 @@ def signUp():
 def searchPage():
     """Displays the searchpage. This is the user's homepage"""
 
-    favorites = 
 
     return render_template('searchpage.html')
 
@@ -84,6 +85,7 @@ def searchResults():
     playername = request.form['playername']
 
     playername = get_search_results(playername)
+
 
     # return player_name: Test to verify request.form
 
@@ -96,10 +98,13 @@ def displayAthleteInfo(athlete_id):
 
     athlete_info = get_athlete_info(athlete_id)
     results = get_stats(athlete_id)
+    # arrests = get_arrests(athlete_id)
+    tweets = get_player_tweets(athlete_id)
 
     return render_template('athlete.html', 
                             athlete_info = athlete_info, 
-                            results=results)
+                            results=results, 
+                            tweets = tweets)
 
 
 @app.route("/setfavorites/<athlete_id>", methods=['POST'])

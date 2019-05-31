@@ -1,13 +1,44 @@
 #DEAL WITH PRETTY PRINT <-----------------
 import os
 import requests
-from flask import request
 from requests.auth import HTTPBasicAuth
 
 MYSPORTSFEED_TOKEN = os.environ.get('MYSPORTSFEED_TOKEN')
 MYSPORTSFEED_PASS = os.environ.get('MYSPORTSFEED_PASS')
 
 SPORTSFEED_URL = "https://api.mysportsfeeds.com/v2.1/pull/nfl/"
+
+
+def get_player_nflarrestlink(athlete_id):
+    """Gets the player's name for other APIs"""
+    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+
+    response = requests.get(SPORTSFEED_URL + f"players.json?player={athlete_id}",
+         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+    response=response.json()
+
+    response_players_dictionary = response.get("players")[0]
+    player_dictionary = response_players_dictionary.get("player")
+
+
+    nflarrestlinkname = player_dictionary.get("firstName") + "%20" + player_dictionary.get("lastName")
+
+    return nflarrestlinkname
+
+def get_player_name(athlete_id):
+    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+
+    response = requests.get(SPORTSFEED_URL + f"players.json?player={athlete_id}",
+         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+    response=response.json()
+
+    response_players_dictionary = response.get("players")[0]
+    player_dictionary = response_players_dictionary.get("player")
+
+
+    full_name = player_dictionary.get("firstName") + player_dictionary.get("lastName")
+
+    return full_name
 
 
 def get_search_results(playername):

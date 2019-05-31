@@ -34,6 +34,21 @@
 
     </ul>
   </div>
+  <div>
+    BELOW SHOULD BE PLAYER TWEETS
+    <br>
+     <ul>
+           {% for tweet in tweets %}
+
+            {{ tweet }}
+            <br>
+            <br>
+             {% endfor %}
+
+    </ul>
+
+ 
+  </div>
 
   <div>
      <form action = "/setfavorites/{athlete_info['athlete_id']}" method="POST">
