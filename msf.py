@@ -36,7 +36,7 @@ def get_player_name(athlete_id):
     player_dictionary = response_players_dictionary.get("player")
 
 
-    full_name = player_dictionary.get("firstName") + player_dictionary.get("lastName")
+    full_name = player_dictionary.get("firstName") + " " + player_dictionary.get("lastName")
 
     return full_name
 

@@ -33,7 +33,6 @@ def get_player_tweets(athlete_id):
         player_tweet = player_tweet_object["text"]
 
         player_tweets.append(player_tweet)
-    
 
 
     return player_tweets
