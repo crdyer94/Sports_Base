@@ -116,32 +116,40 @@ def get_athlete_info(athlete_id):
 
 def get_stats(athlete_id):
     """Gets the player's stats from API"""
-    results = []
-    career_data = {}
+    career_stats = []
     available_seasons =  ["2019-playoff", "2018-2019-regular",
                             "2018-playoff", "2017-2018-regular"]
-    available_seasons_count = 0
 
     for season in available_seasons:
 
         Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
         response = requests.get(SPORTSFEED_URL + f"{season}/player_stats_totals.json?player={athlete_id}",
              auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-        response=response.json()
+        response=response.json() #this is a dictionary
 
-        response_stats_info = response.get("playerStatsTotals")[0] #keywords of dictionaries within the API's playerStatsTotals
-        player_stats = response_stats_info.get("stats") #keywords of dictionaries within the API's stats
+        api_playerStatTotals = response.get("playerStatsTotals")[0]
 
-        if player_stats.get("gamesPlayed") != 0: #adds season stats in seasons the athlete played
-        #WORKING ON PARSING HERE AS OF MAY 29
-            career_data = {
-            "season": season,
-            "gamesPlayed": player_stats.get("gamesPlayed"),
-            "passing": player_stats.get("Passing")
-            }
-            results.append(career_data)
+        season_stats = api_playerStatTotals.get("stats")
 
-    return player_stats
+        if season_stats.get("gamesPlayed") != 0: #only adds seasons in which the athlete played games
+
+            career_stats.append(season,
+                                season_stats.get("gamesPlayed"),
+                                season_stats.get("passing"),
+                                season_stats.get("rushing"),
+                                season_stats.get("receiving"),
+                                season_stats.get("tackles"),
+                                season_stats.get("sacks"),
+                                season_stats.get("interceptions"),
+                                season_stats.get("fumbles"),
+                                season_stats.get("kickoffReturns"),
+                                season_stats.get("puntReturns"),
+        
+                                )
+
+    return career_stats
+
+
 
 
 
