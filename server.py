@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, redirect, request, make_response)
+from flask import (Flask, render_template, redirect, request, make_response, session)
 import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
@@ -100,29 +100,45 @@ def displayAthleteInfo(athlete_id):
     results = get_stats(athlete_id)
     # arrests = get_arrests(athlete_id)
     tweets = get_player_tweets(athlete_id)
+    session["athlete_id"] = athlete_id
 
     return render_template('athlete.html', 
-                            athlete_info = athlete_info, 
+                            athlete_info = athlete_info,
+                            athlete_id = athlete_id, 
                             results=results, 
                             tweets = tweets)
 
 
-@app.route("/setfavorites/<athlete_id>", methods=['POST'])
-def setFavorite(athlete_id):
+@app.route("/addfavorite", methods=['POST'])
+def setFavorite():
     """Associates the user to their favorited athlete"""
-
-    favorite  = Favorite(id=current_user.id, favorited_item=athlete_id)
-    db.session.add(favorite)
+    favorite  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
+    db.session.add(favorite) 
 
     db.session.commit()
 
-    return redirect(f"/searchpage")
+    return redirect("/searchpage")
+
+@app.route("/removefavorite", methods=['POST'])
+def removeFavorite():
+    """Removes the association of the user to the favorited athlete"""
+    #search for athlete id in the favorites table
+    #remove the row from the table
+
+    favorite = Favorite.query.filter_by(id = current_user.id,
+                            favorited_item = session["athlete_id"]).first()
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    
+    return redirect("/searchpage")
 
 @app.route('/logout')
 @login_required
 def logout():
     """Logs out the user"""
-    
+    del session[athlete_id]
     logout_user()
     return render_template('index.html')
 

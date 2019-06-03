@@ -24,18 +24,11 @@
     </ul>
   </div>
   <div>
-    <ul>
-           {% for result in results %}
+    
+    {{ results }}
 
-            {{ result }}
-            <br>
-            <br>
-             {% endfor %}
-
-             <br>
-
-    </ul>
   </div>
+
   <div>
     BELOW SHOULD BE PLAYER TWEETS
     <br>
@@ -53,10 +46,18 @@
   </div>
 
   <div>
-     <form action = "/setfavorites/{athlete_info['athlete_id']}" method="POST">
+     <form action = "/addfavorite" method="POST">
       <input type="submit" name="favorite" value="Favorite">
       </form>
   </div>
+
+  <div>
+    <form action = "/removefavorite" method="POST">
+      <input type="submit" name="unfavorite" value="Unfavorite">
+      
+    </form>
+  </div>
+
 
 
 <p> <a href='/searchpage'>Back to Search</a></p>

@@ -14,7 +14,13 @@ def get_arrests(athlete_id):
     # link_name = NFLARREST_URL + f'/{player_name}'
     # print(link_name)
     try:
-        response = requests.get(f'http://nflarrest.com/api/v1/player/arrests/{player_name}', headers={'content-type': 'application/json',  'Accept': 'application/json, */*'}, cookies={'PHPSESSID':'00815b12f2388fca7f77c0a941372da1'})
+        response = requests.get(
+            f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
+            headers={'content-type': 'application/json',
+                    'Accept': 'application/json, */*'}, 
+            cookies={'PHPSESSID':'00815b12f2388fca7f77c0a941372da1'}
+                                )
+
     except RuntimeError:
         response = "THIS DIDNT WORK"
     print(response.request)

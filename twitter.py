@@ -19,7 +19,7 @@ api = tweepy.API(auth)
 def get_player_tweets(athlete_id):
     """Gets the player's tweets from Twitter"""
 
-    player_screen_name = get_player_id(athlete_id)
+    player_screen_name = get_player_screen_name(athlete_id)
     player_tweets =[]
 
     player_tweets_objects = api.user_timeline(screen_name=player_screen_name,
@@ -38,7 +38,7 @@ def get_player_tweets(athlete_id):
     return player_tweets
 
 
-def get_player_id(athlete_id):
+def get_player_screen_name(athlete_id):
     """Gets the athlete's twitter from the Twitter API"""
     
     player_name = get_player_name(athlete_id)

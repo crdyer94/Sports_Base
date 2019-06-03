@@ -8,33 +8,35 @@ MYSPORTSFEED_PASS = os.environ.get('MYSPORTSFEED_PASS')
 
 SPORTSFEED_URL = "https://api.mysportsfeeds.com/v2.1/pull/nfl/"
 
-
-def get_player_nflarrestlink(athlete_id):
-    """Gets the player's name for other APIs"""
+def my_sports_feed_players_api(api_parameter):
+    """Calls the players data from the mysportsfeed api"""
     Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
 
-    response = requests.get(SPORTSFEED_URL + f"players.json?player={athlete_id}",
+    response = requests.get(SPORTSFEED_URL + f"players.json?player={api_parameter}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
     response=response.json()
 
-    response_players_dictionary = response.get("players")[0]
-    player_dictionary = response_players_dictionary.get("player")
+    return response
 
+
+def get_player_nflarrestlink(athlete_id):
+    """Gets the player's name for other APIs
+        This returns the athlete's name for the nfl arrest api link"""
+    api_response = my_sports_feed_players_api(athlete_id)
+    api_player_dictionary = api_response.get("players")[0]
+
+    player_dictionary = api_player_dictionary.get("player")
 
     nflarrestlinkname = player_dictionary.get("firstName") + "%20" + player_dictionary.get("lastName")
 
     return nflarrestlinkname
 
 def get_player_name(athlete_id):
-    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+    """ This returns the full name of the player to be used for the twitter api"""
+    api_response = my_sports_feed_players_api(athlete_id)
+    api_player_dictionary = api_response.get("players")[0]
 
-    response = requests.get(SPORTSFEED_URL + f"players.json?player={athlete_id}",
-         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    response=response.json()
-
-    response_players_dictionary = response.get("players")[0]
-    player_dictionary = response_players_dictionary.get("player")
-
+    player_dictionary = api_player_dictionary.get("player")
 
     full_name = player_dictionary.get("firstName") + " " + player_dictionary.get("lastName")
 
@@ -42,13 +44,10 @@ def get_player_name(athlete_id):
 
 
 def get_search_results(playername):
-    """Gets the search from results from the API based on the entered player last name"""
+    """Gets the search from results from the API based on the entered player last name
+        My sports feed API requires a player's last name to search"""
 
-    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
-
-    response = requests.get(SPORTSFEED_URL + f"players.json?player={playername}",
-         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    response=response.json()
+    response = my_sports_feed_players_api(playername)
 
     response_display = []
 
@@ -67,45 +66,33 @@ def get_search_results(playername):
 
 
 
-# get the athlete_id, the first name, the last name from the API
-# create dictionary as athlete_id: fullname
-# add to list of results
-# return list of dictionaries to server
-# on server display fullname on screen
-# when user clicks fullname, we route to a profile page for that specific athlete_id
-
-
-
 def get_athlete_info(athlete_id):
     """Gets a player's info from API to display on that player's profile page"""
 
-    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+    api_response = my_sports_feed_players_api(athlete_id)
 
-    response = requests.get(SPORTSFEED_URL + f"players.json?player={athlete_id}",
-         auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    response=response.json()
+    api_player_dictionary = api_response.get("players")[0]
+    player_dictionary = api_player_dictionary.get("player")
 
-    response_players_dict = response.get("players")[0]
-    player_dict = response_players_dict.get("player")
-
-    response_team_dict = response.get("references")
-    team_dict = response_team_dict.get("teamReferences")[0]
-    arena = team_dict.get("homeVenue")
+    api_response_team_reference = api_response.get("references")
+    team_dictionary = api_response_team_reference.get("teamReferences")[0]
+    
+    arena = team_dictionary.get("homeVenue")
 
     player_profile = {
-    "fullname": player_dict.get("firstName") + " " +
-                player_dict.get("lastName"), 
-    "position": player_dict.get("primaryPosition"),
-    "h/weight": player_dict.get("height") + ", "+ 
-                str(player_dict.get("weight")) + " lbs",
-    "bday": player_dict.get("birthDate") + ", " + player_dict.get("birthCity"),
-    "age": player_dict.get("age"),
-    "highschool": player_dict.get("highSchool"),
-    "college": player_dict.get("college"),
-    "rosterpic": player_dict.get("officialImageSrc"),
-    "current_team": team_dict.get("city") + " " + team_dict.get("name"),
-    "team_abbr": team_dict.get("abbreviation"),
-    "jersey_num": player_dict.get("jerseyNumber"), 
+    "fullname": player_dictionary.get("firstName") + " " +
+                player_dictionary.get("lastName"), 
+    "position": player_dictionary.get("primaryPosition"),
+    "h/weight": player_dictionary.get("height") + ", "+ 
+                str(player_dictionary.get("weight")) + " lbs",
+    "bday": player_dictionary.get("birthDate") + ", " + player_dictionary.get("birthCity"),
+    "age": player_dictionary.get("age"),
+    "highschool": player_dictionary.get("highSchool"),
+    "college": player_dictionary.get("college"),
+    "rosterpic": player_dictionary.get("officialImageSrc"),
+    "current_team": team_dictionary.get("city") + " " + team_dictionary.get("name"),
+    "team_abbr": team_dictionary.get("abbreviation"),
+    "jersey_num": player_dictionary.get("jerseyNumber"), 
     "arena": arena.get("name")
 
     # "rosterstatus": player_dict.get("currentRosterStatus"),
@@ -133,20 +120,9 @@ def get_stats(athlete_id):
 
         if season_stats.get("gamesPlayed") != 0: #only adds seasons in which the athlete played games
 
-            career_stats.append(season,
-                                season_stats.get("gamesPlayed"),
-                                season_stats.get("passing"),
-                                season_stats.get("rushing"),
-                                season_stats.get("receiving"),
-                                season_stats.get("tackles"),
-                                season_stats.get("sacks"),
-                                season_stats.get("interceptions"),
-                                season_stats.get("fumbles"),
-                                season_stats.get("kickoffReturns"),
-                                season_stats.get("puntReturns"),
-        
-                                )
-
+            career_stats.append(season)
+            
+            career_stats.append(season_stats)
     return career_stats
 
 
