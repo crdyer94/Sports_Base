@@ -79,17 +79,18 @@ class Favorite(db.Model):
                             primary_key=True)
     id = db.Column(db.Integer,
                         db.ForeignKey('users.id'))
-    favorited_item = db.Column(db.String,
-                                nullable = False,
-                                unique = True)
+    favorited_item = db.Column(db.Integer,
+                                db.ForeignKey('athletes.athlete_id'))
     user = db.relationship("User",
                            backref=db.backref("favorites", order_by=favorite_id))
+    athlete = db.relationship("Athlete",
+                                backref=db.backref("favorites"))
     
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
-        return f"<Favorite favorite_id={self.favorite_id}, User ID = {self.id}, athlete favorited {self.favorited_item} "
+        return f"<Favorite favorite_id={self.favorite_id}>"
 
 class Athlete(db.Model):
     """Searched Athlete profiles"""
@@ -101,6 +102,8 @@ class Athlete(db.Model):
                             unique=True)
 
     athlete_data = db.Column(NestedMutableJson)
+
+    return f"<athlete_id={self.athlete_id}>"
 
 
 

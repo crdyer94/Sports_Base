@@ -1,7 +1,7 @@
 import os
 import tweepy
 import requests
-from msf import get_player_name
+from mysportsfeedhelperfunctions import get_player_name
 
 
 TWITTER_CONSUMER = os.environ.get('TWITTER_CONSUMER')
