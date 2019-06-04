@@ -119,10 +119,12 @@ def get_stats(athlete_id):
         season_stats = api_playerStatTotals.get("stats")
 
         if season_stats.get("gamesPlayed") != 0: #only adds seasons in which the athlete played games
+            
 
             career_stats.append(season)
-            
-            career_stats.append(season_stats)
+            career_stats.append(season_stats.get("gamesPlayed"))
+            career_stats.append(season_stats.get("passing"))
+
     return career_stats
 
 
