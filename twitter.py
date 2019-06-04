@@ -1,7 +1,7 @@
 import os
 import tweepy
 import requests
-from mysportsfeedhelperfunctions import get_player_name
+from msf import my_sports_feed_players_api
 
 
 TWITTER_CONSUMER = os.environ.get('TWITTER_CONSUMER')
@@ -15,6 +15,20 @@ auth.secure=True
 auth.set_access_token(TWITTER_ACCESS, TWITTER_ACCESS_SECRET)
 
 api = tweepy.API(auth)
+
+
+def get_player_name(athlete_id):
+    """ This calls the my sportsfeed api and returns the full name
+     of the player to be used for searching"""
+    api_response = my_sports_feed_players_api(athlete_id)
+    api_player_dictionary = api_response.get("players")[0]
+
+    player_dictionary = api_player_dictionary.get("player")
+
+    full_name = player_dictionary.get("firstName") + " " + player_dictionary.get("lastName")
+
+    return full_name
+
 
 def get_player_tweets(athlete_id):
     """Gets the player's tweets from Twitter"""

@@ -103,7 +103,9 @@ class Athlete(db.Model):
 
     athlete_data = db.Column(NestedMutableJson)
 
-    return f"<athlete_id={self.athlete_id}>"
+    def __repr__(self):
+        """Provides representation when printed"""
+        return f"<athlete_id={self.athlete_id}>"
 
 
 
