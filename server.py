@@ -8,7 +8,7 @@ from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
 from msf import get_search_results, get_athlete_info, get_stats
-# from nflarrest import get_arrests
+from nflarrest import get_arrests
 from twitter import get_player_tweets
 
 
@@ -98,14 +98,15 @@ def displayAthleteInfo(athlete_id):
 
     athlete_info = get_athlete_info(athlete_id)
     results = get_stats(athlete_id)
-    # arrests = get_arrests(athlete_id)
+    arrests = get_arrests(athlete_id)
     tweets = get_player_tweets(athlete_id)
     session["athlete_id"] = athlete_id
 
     return render_template('athlete.html', 
                             athlete_info = athlete_info,
                             athlete_id = athlete_id, 
-                            results=results, 
+                            results=results,
+                            arrests=arrests, 
                             tweets = tweets)
 
 

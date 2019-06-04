@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_login import LoginManager, UserMixin
+from sqlalchemy_json import NestedMutableJson
 
 
 db = SQLAlchemy()
@@ -69,7 +70,7 @@ class RegisterForm(FlaskForm):
 
 
 class Favorite(db.Model):
-    """Athlete or team profiles favorited by a user"""
+    """Athlete profiles favorited by a user"""
 
     __tablename__ = "favorites"
 
@@ -89,6 +90,17 @@ class Favorite(db.Model):
         """Provides helpful representation when printed."""
 
         return f"<Favorite favorite_id={self.favorite_id}, User ID = {self.id}, athlete favorited {self.favorited_item} "
+
+class Athlete(db.Model):
+    """Searched Athlete profiles"""
+
+    __tablename__ = "athletes"
+
+    athlete_id = db.Column(db.Integer,
+                            primary_key=True,
+                            unique=True)
+
+    athlete_data = db.Column(NestedMutableJson)
 
 
 
