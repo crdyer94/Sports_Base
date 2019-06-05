@@ -25,8 +25,8 @@
   </div>
 
   <div> 
-    {% for result in results %}
-        {{result}}
+    {% for keyi, itemi in results.items() %}
+        {{keyi}} : {{itemi}}
               <br>
     {% endfor %}
   </div>

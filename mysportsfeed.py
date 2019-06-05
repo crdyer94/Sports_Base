@@ -45,8 +45,6 @@ def get_search_results(playername):
 
     return response_display
 
-
-
 def get_athlete_info(athlete_id):
     """Gets a player's info from API to display on that player's profile page"""
 
@@ -84,7 +82,24 @@ def get_athlete_info(athlete_id):
 
 def get_stats(athlete_id):
     """Gets the player's stats from API"""
-    career_stats = []
+    career_stats = {
+        "career_passing": [],
+        "career_rushing": [],
+        "career_receiving": [],
+        "career_tackles": [],
+        "career_interceptions": [],
+        "career_fumbles": [],
+        "career_kickoffReturns": [],
+        "career_puntReturns": [],
+        "career_twoPointAttempts": []
+    }
+    season_time = {}
+    games_played = {}
+
+    stat_types = ["passing", "rushing", "receiving", "tackles", 
+                    "interceptions", "fumbles", "kickoffReturns", 
+                    "puntReturns", "twoPointAttempts"]
+    
     available_seasons =  ["2019-playoff", "2018-2019-regular",
                             "2018-playoff", "2017-2018-regular"]
     available_stat_categories = [("passing", "passAttempts"),
@@ -97,10 +112,10 @@ def get_stats(athlete_id):
                                  ("puntReturns", "prRet"), 
                                  ("twoPointAttempts", "twoPtAtt")]
 
-    for season in available_seasons:
+    for available_season in available_seasons:
 
         Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
-        response = requests.get(SPORTSFEED_URL + f"{season}/player_stats_totals.json?player={athlete_id}",
+        response = requests.get(SPORTSFEED_URL + f"{available_season}/player_stats_totals.json?player={athlete_id}",
              auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
         response=response.json() #this is a dictionary
 
@@ -108,14 +123,19 @@ def get_stats(athlete_id):
 
         season_stats = api_playerStatTotals.get("stats")
 
-        if season_stats["gamesPlayed"] != 0:
-            career_stats.append(season)
-            games_played = season_stats["gamesPlayed"]
-            career_stats.append(f"Games Played: {games_played}")
-            for category in available_stat_categories:
-                if season_stats[category[0]][category[1]] != 0:
-                    career_stats.append(season_stats[category[0]])
+        if season_stats["gamesPlayed"] != 0: #do not want to show seasons that the player did not participate in
 
+            games_played = {"Games Played" : season_stats["gamesPlayed"]}
+            season_time = {"Season": available_season}
+
+            for category in available_stat_categories:
+
+                if season_stats[category[0]][category[1]] != 0: #do not want to show stat categories that do not apply to the player
+                    key = f'career_{category[0]}'
+                    career_stats[key].append(season_time)
+                    career_stats[key].append(games_played)
+                    career_stats[key].append(season_stats[category[0]])
+                        
 
     return career_stats
 
