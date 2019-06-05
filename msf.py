@@ -81,6 +81,15 @@ def get_stats(athlete_id):
     career_stats = []
     available_seasons =  ["2019-playoff", "2018-2019-regular",
                             "2018-playoff", "2017-2018-regular"]
+    available_stat_categories = [("passing", "passAttempts"),
+                                 ("rushing", "rushAttempts"),
+                                 ("receiving", "targets"), 
+                                 ("tackles", "tackleTotal"),
+                                 ("interceptions", "interceptions"),
+                                 ("fumbles", "fumbles"), 
+                                 ("kickoffReturns", "krRet"),
+                                 ("puntReturns", "prRet"), 
+                                 ("twoPointAttempts", "twoPtAtt")]
 
     for season in available_seasons:
 
@@ -93,15 +102,16 @@ def get_stats(athlete_id):
 
         season_stats = api_playerStatTotals.get("stats")
 
-        if season_stats.get("gamesPlayed") != 0: #only adds seasons in which the athlete played games
-            
-
+        if season_stats["gamesPlayed"] != 0:
             career_stats.append(season)
-            career_stats.append(season_stats.get("gamesPlayed"))
-            career_stats.append(season_stats.get("passing"))
+            games_played = season_stats["gamesPlayed"]
+            career_stats.append(f"Games Played: {games_played}")
+            for category in available_stat_categories:
+                if season_stats[category[0]][category[1]] != 0:
+                    career_stats.append(season_stats[category[0]])
+
 
     return career_stats
-
 
 
 

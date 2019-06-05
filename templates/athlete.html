@@ -24,10 +24,16 @@
     </ul>
   </div>
 
-  <pre>
-    {{ arrests }}
-  </pre>
+  <div> 
+    {% for result in results %}
+        {{result}}
+              <br>
+    {% endfor %}
+  </div>
 
+  <br>
+  <br>
+ 
   <div>
     BELOW SHOULD BE PLAYER TWEETS
     <br>
