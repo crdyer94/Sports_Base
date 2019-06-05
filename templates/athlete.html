@@ -25,8 +25,12 @@
   </div>
 
   <div> 
-    {% for keyi, itemi in results.items() %}
-        {{keyi}} : {{itemi}}
+    {% for career_stat_type, stat_type  in results.items() %}
+        
+        {%for stat in stat_type%}
+        {{stat}}
+        <br>
+        {%endfor%}
               <br>
     {% endfor %}
   </div>
