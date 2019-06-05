@@ -22,7 +22,13 @@ def get_search_results(playername):
     """Gets the search from results from the API based on the entered player last name
         My sports feed API requires a player's last name to search"""
 
-    response = my_sports_feed_players_api(playername)
+    if " " in playername:
+        playername_list = playername.split()
+        api_playername = f"{playername_list[0]}-{playername_list[1]}"
+    else:
+        api_playername = playername
+
+    response = my_sports_feed_players_api(api_playername)
 
     response_display = []
 
