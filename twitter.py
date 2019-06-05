@@ -1,7 +1,7 @@
 import os
 import tweepy
 import requests
-from msf import my_sports_feed_players_api
+from mysportsfeed import my_sports_feed_players_api
 
 
 TWITTER_CONSUMER = os.environ.get('TWITTER_CONSUMER')
