@@ -73,14 +73,14 @@ def register_new_user():
 
 @app.route('/searchpage')
 @login_required
-def search_page():
+def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
 
 
     return render_template('searchpage.html')
 
 @app.route('/searchresults', methods=['POST'])
-def search_results():
+def display_search_results():
 
     playername = request.form['playername']
 
