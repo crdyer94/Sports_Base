@@ -1,0 +1,60 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+
+{% block body %}
+
+    <div class="container">
+      <div class="row">
+        <div style="text-align: center">
+          <h1 style="color: black;">Sports Base</h1> 
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+<div class="container">
+    <div class="row">
+              <div>
+
+                <form class = "form_signin" action="/register" method="POST" id="background-r">
+                  <h2 class="form_signin_heading">Sign Up</h2>
+                  {{ register_new_user_form.hidden_tag() }}
+                  {{ wtf.form_field(register_new_user_form.username) }}
+                  {{ wtf.form_field(register_new_user_form.email) }}
+                  {{ wtf.form_field(register_new_user_form.password) }}
+                  <button class = "btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                </form>
+             </div>
+             
+              <div>
+                
+                    <form class = "form_signin" action="/login" method="POST" id="background-l">   
+                      <h2 class="form_signin_heading">Please sign in</h2>
+                        {{ login_form.hidden_tag() }}
+                        {{ wtf.form_field(login_form.username) }}
+                        {{ wtf.form_field(login_form.password) }}
+                        <button class = "btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    </form>
+                              
+              </div>
+     
+    </div>
+
+</div>
+
+    
+
+
+
+
+{% endblock %}
+
+
+
+{% endblock %}

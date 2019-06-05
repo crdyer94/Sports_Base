@@ -18,13 +18,17 @@ app.jinja_env.undefined = StrictUndefined
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'log_in'
+login_manager.login_view = 'login'
 
 @app.route('/')
-def index():
-    """Show login page"""
+def homepage():
+    """Show homepage to allow users to sign in or register"""
+    login_form = LoginForm()
+    register_new_user_form = RegisterForm()
 
-    return render_template('index.html') 
+    return render_template('homepage.html',
+                            register_new_user_form = register_new_user_form,
+                            login_form = login_form)
 
 @login_manager.user_loader
 def load_user(id):
@@ -33,34 +37,33 @@ def load_user(id):
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def log_in():
+def login():
     """ Validating entered user info with the DB"""
 
-    form = LoginForm() 
+    login_form = LoginForm() 
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(username=login_form.username.data).first()
         if user:
-            if user.password == form.password.data:
-                login_user(user, remember=form.data)
+            if user.password == login_form.password.data:
+                # login_user(user, remember=form.data)
                 return redirect('/searchpage')
  
     #tested to make sure that I am posting data and getting data from the form
 
-    return render_template('login.html',
-                            form=form)
+    return redirect('/')
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register_new_user():
     """Adding a new user to the DB"""
 
-    form = RegisterForm()
+    register_new_user_form = RegisterForm()
 
-    if form.validate_on_submit():
-        new_user = User(username=form.username.data,
-                        email=form.email.data,
-                        password=form.password.data)
+    if register_new_user_form.validate_on_submit():
+        new_user = User(username=register_new_user_form.username.data,
+                        email=register_new_user_form.email.data,
+                        password=register_new_user_form.password.data)
         db.session.add(new_user)
         db.session.commit()
         return render_template('searchpage.html')
@@ -68,8 +71,8 @@ def register_new_user():
         #tested to make sure that a new user is being created and added to my db
     #tested to make sure taht I am posting data and getting data from the form
 
-    return render_template('signup.html', 
-                            form=form)
+    return redirect('/')
+
 
 @app.route('/searchpage')
 @login_required
