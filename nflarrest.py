@@ -1,7 +1,7 @@
 import os
 import requests
 from flask import request
-from msf import my_sports_feed_players_api
+from mysportsfeed import my_sports_feed_players_api
 
 
 NFLARREST_URL = 'http://nflarrest.com/api/v1/player/arrests'

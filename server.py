@@ -7,7 +7,7 @@ from model import (User, LoginForm, RegisterForm, connect_to_db, db, Favorite)
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
-from msf import get_search_results, get_athlete_info, get_stats
+from mysportsfeed import get_search_results, get_athlete_info, get_stats
 from nflarrest import get_arrests
 from twitter import get_player_tweets
 
@@ -18,7 +18,7 @@ app.jinja_env.undefined = StrictUndefined
 Bootstrap(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'logIn'
+login_manager.login_view = 'log_in'
 
 @app.route('/')
 def index():
@@ -33,10 +33,10 @@ def load_user(id):
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def logIn():
+def log_in():
     """ Validating entered user info with the DB"""
 
-    form = LoginForm()
+    form = LoginForm() 
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -52,7 +52,7 @@ def logIn():
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def signUp():
+def register_new_user():
     """Adding a new user to the DB"""
 
     form = RegisterForm()
@@ -73,14 +73,14 @@ def signUp():
 
 @app.route('/searchpage')
 @login_required
-def searchPage():
+def search_page():
     """Displays the searchpage. This is the user's homepage"""
 
 
     return render_template('searchpage.html')
 
 @app.route('/searchresults', methods=['POST'])
-def searchResults():
+def search_results():
 
     playername = request.form['playername']
 
@@ -93,7 +93,7 @@ def searchResults():
                             playername=playername)
 
 @app.route('/athletes/<athlete_id>')
-def displayAthleteInfo(athlete_id):
+def display_athlete_info(athlete_id):
     """Athlete profile page"""
 
     athlete_info = get_athlete_info(athlete_id)
@@ -111,7 +111,7 @@ def displayAthleteInfo(athlete_id):
 
 
 @app.route("/addfavorite", methods=['POST'])
-def setFavorite():
+def set_favorite():
     """Associates the user to their favorited athlete"""
     favorite  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
     db.session.add(favorite) 
@@ -121,7 +121,7 @@ def setFavorite():
     return redirect("/searchpage")
 
 @app.route("/removefavorite", methods=['POST'])
-def removeFavorite():
+def remove_favorite():
     """Removes the association of the user to the favorited athlete"""
     #search for athlete id in the favorites table
     #remove the row from the table
