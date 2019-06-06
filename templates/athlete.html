@@ -34,29 +34,7 @@
 
   <div> 
     <h3>Career Stats</h3>
-    {% for career_stat_type, stat_types in results.items() %}
-          <br>
-          <table border='1'>
-            <tr>
-              {% for season_stats in stat_types %}
-              {% for stat_type, stat in season_stats.items()%}
-              <th> {{ stat_type }} </th>
-              {% endfor %}
-              {% endfor %}
-            </tr>
-            {% for season_stats in stat_types %}
-            <tr>
-              {% for stat_type, stat in season_stats.items()%}
-              <td> {{ stat }} </td>
-            </tr>
-            {% endfor %}
-            {% endfor %}
-            
-          </table>
-            <br>
-            <br>
-    {% endfor %}
-
+    {{career_stats}}
 
   </div>
 

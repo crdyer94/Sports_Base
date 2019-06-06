@@ -100,7 +100,7 @@ def display_athlete_info(athlete_id):
     """Athlete profile page"""
 
     athlete_info = get_athlete_info(athlete_id)
-    results = get_stats(athlete_id)
+    career_stats = get_stats(athlete_id)
     # arrests = get_arrests(athlete_id)
     arrests = {"Arrests": "No Arrests"}
     tweets = get_player_tweets(athlete_id)
@@ -109,7 +109,7 @@ def display_athlete_info(athlete_id):
     return render_template('athlete.html', 
                             athlete_info = athlete_info,
                             athlete_id = athlete_id, 
-                            results=results,
+                            career_stats=career_stats,
                             arrests=arrests, 
                             tweets = tweets)
 

@@ -97,9 +97,8 @@ def get_stats(athlete_id):
     
     games_played = {}
     
-    available_seasons =  ["2019-playoff"]
-     # "2018-2019-regular",
-     #                        "2018-playoff", "2017-2018-regular"]
+    available_seasons =  ["2019-playoff", "2018-2019-regular",
+                            "2018-playoff", "2017-2018-regular"]
     available_stat_categories = [("passing", "passAttempts"),
                                  ("rushing", "rushAttempts"),
                                  ("receiving", "targets"), 
