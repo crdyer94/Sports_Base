@@ -94,11 +94,8 @@ def get_stats(athlete_id):
         "career_twoPointAttempts": []
     }
     season_time = {}
+    season_statistics = {}
     games_played = {}
-
-    stat_types = ["passing", "rushing", "receiving", "tackles", 
-                    "interceptions", "fumbles", "kickoffReturns", 
-                    "puntReturns", "twoPointAttempts"]
     
     available_seasons =  ["2019-playoff", "2018-2019-regular",
                             "2018-playoff", "2017-2018-regular"]
@@ -119,26 +116,41 @@ def get_stats(athlete_id):
              auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
         response=response.json() #this is a dictionary
 
-        api_playerStatTotals = response.get("playerStatsTotals")[0]
+        api_playerStatTotals = response.get("playerStatsTotals")[0] #something to do: json binding in python --> LOOK IT UP
 
         season_stats = api_playerStatTotals.get("stats")
 
         if season_stats["gamesPlayed"] != 0: #do not want to show seasons that the player did not participate in
 
-            games_played = {"Games Played" : season_stats["gamesPlayed"]}
-            season_time = {"Season": available_season}
-
             for category in available_stat_categories:
 
+
                 if season_stats[category[0]][category[1]] != 0: #do not want to show stat categories that do not apply to the player
+                    season_statistics["Games Played"] = season_stats["gamesPlayed"]
+                    season_statistics["Season"] = available_season
+                    
+                    for key, item in season_stats[category[0]].items():
+                        # season_statistics[key] = item
+                        print(key)
+                    
                     key = f'career_{category[0]}'
-                    career_stats[key].append(season_time)
-                    career_stats[key].append(games_played)
-                    career_stats[key].append(season_stats[category[0]])
+                    career_stats[key].append(season_statistics)
                         
 
     return career_stats
 
+
+
+    #         for category in available_stat_categories:
+
+    #             if season_stats[category[0]][category[1]] != 0: #do not want to show stat categories that do not apply to the player
+    #                 key = f'career_{category[0]}'
+    #                 career_stats[key].append(season_time)
+    #                 career_stats[key].append(games_played)
+    #                 career_stats[key].append(season_stats[category[0]])
+                        
+
+    # return career_stats
 
 
 

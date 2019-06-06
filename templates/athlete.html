@@ -23,17 +23,22 @@
            <br>
     </ul>
   </div>
+  <div>
+    {{arrests}}
+    <br>
+    <br>
+  </div>
 
   <div> 
-    {% for career_stat_type, stat_type  in results.items() %}
-        
-        {%for stat in stat_type%}
-        {{stat}}
-        <br>
-        {%endfor%}
-              <br>
-    {% endfor %}
+          {% for career_stat_type, stat_type in results.items() %}
+
+              {{career_stat_type}} : {{stat_type}}
+            <br>
+            <br>
+
+          {% endfor %}
   </div>
+
 
   <br>
   <br>
