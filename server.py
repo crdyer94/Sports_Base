@@ -101,7 +101,8 @@ def display_athlete_info(athlete_id):
 
     athlete_info = get_athlete_info(athlete_id)
     results = get_stats(athlete_id)
-    arrests = get_arrests(athlete_id)
+    # arrests = get_arrests(athlete_id)
+    arrests = {"Arrests": "No Arrests"}
     tweets = get_player_tweets(athlete_id)
     session["athlete_id"] = athlete_id
 
