@@ -15,7 +15,7 @@ db = SQLAlchemy()
 # Model definitions
 
 class User(UserMixin, db.Model):
-    """User of ratings website."""
+    """User of website."""
 
     __tablename__ = "users"
 

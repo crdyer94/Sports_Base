@@ -34,9 +34,29 @@
 
   <div> 
     <h3>Career Stats</h3>
-    {{career_stats}}
+    {% for career_stat_type, career_stat_list in career_stats.items() %}
+    <table>
+      {% for season_stats in career_stat_list %}
+      {% for stat_type, stat in season_stats.items() %}
+      <th> {{ stat_type }} </th>
+      {% endfor %}
+    <tr>
+      {% for stat_type, stat in season_stats.items() %}
+      <td> {{ stat }}</td>
+      {% endfor %}
+    </tr>
+    
+    {% endfor %}
+      
+    </table>
+    
+
+      
+    <br>
+    {% endfor %}
 
   </div>
+
 
 
   <br>
