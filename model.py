@@ -14,28 +14,28 @@ db = SQLAlchemy()
 #####################################################################
 # Model definitions
 
-class User(UserMixin, db.Model):
-    """User of website."""
+# class User(UserMixin, db.Model):
+#     """User of website."""
 
-    __tablename__ = "users"
+#     __tablename__ = "users"
 
-    id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    email = db.Column(db.String(64),
-                        nullable=False,
-                        unique=True)
-    password = db.Column(db.String(64), 
-                        nullable=False)
-    username = db.Column(db.String(64),
-                            nullable=False, 
-                            unique=True)
+#     id = db.Column(db.Integer,
+#                         autoincrement=True,
+#                         primary_key=True)
+#     email = db.Column(db.String(64),
+#                         nullable=False,
+#                         unique=True)
+#     password = db.Column(db.String(64), 
+#                         nullable=False)
+#     username = db.Column(db.String(64),
+#                             nullable=False, 
+#                             unique=True)
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-        return f"""<User user_id={self.id}, 
-                    email={self.email}>"""
+#         return f"""<User user_id={self.id}, 
+#                     email={self.email}>"""
 
 
 class LoginForm(FlaskForm):

@@ -27,23 +27,31 @@ def get_arrests(athlete_id):
     player_name = get_player_nflarrestlink(athlete_id)
     link_name = NFLARREST_URL + f'/{player_name}'
     
-    response = requests.get(
-            f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
-            headers={'user-agent': 'Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0'})
+    try:
+        response = requests.get(
+                f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
+                headers={'user-agent': 'Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0'})
 
-    # while True:
-    #     try:
-    api_player_arrest_information = response.json()[0]
-    player_arrest_information = { 
-                        "Arrest Date" : api_player_arrest_information.get("Date"),
-                        "Crime Category" : api_player_arrest_information.get("Crime_category") 
-                        + ": " + api_player_arrest_information.get("Category"), 
-                        "Description": api_player_arrest_information.get("Description"),
-                        "Outcome": api_player_arrest_information.get("Outcome")
-                                        }
-    return player_arrest_information
+        #if status is bad call handler + log error
+        api_player_arrest_information = response.json()[0]
+        player_arrest_information = { 
+                                "Arrest Date" : api_player_arrest_information.get("Date"),
+                                "Crime Category" : api_player_arrest_information.get("Crime_category") 
+                                + ": " + api_player_arrest_information.get("Category"), 
+                                "Description": api_player_arrest_information.get("Description"),
+                                "Outcome": api_player_arrest_information.get("Outcome")
+                                                }
+        return player_arrest_information
+    except Exception:
+        player_arrest_information = handle_bad_arrest_response()
+        return player_arrest_information
 
-    #     except ValueError:
 
-    # return "No arrests on record"
+  
 
+   
+
+
+def handle_bad_arrest_response():
+    print("this is a bad response handler")
+    return "No arrests for this player"

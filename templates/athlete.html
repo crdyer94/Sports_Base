@@ -23,19 +23,16 @@
            <br>
     </ul>
   </div>
+
   <div>
-    {% for arrest_key, arrest_item in arrests.items() %}
-              {{  arrest_key }} : {{ arrest_item }}
-              <br>
-              {%endfor%}
-    <br>
-    <br>
+    {{ arrests }}
   </div>
 
   <div> 
     <h3>Career Stats</h3>
+
     {% for career_stat_type, career_stat_list in career_stats.items() %}
-    <table>
+    <table border = '1'>
       {% for season_stats in career_stat_list %}
       {% for stat_type, stat in season_stats.items() %}
       <th> {{ stat_type }} </th>
@@ -63,7 +60,7 @@
   <br>
  
   <div>
-    BELOW SHOULD BE PLAYER TWEETS
+    <h3>Tweets</h3>
     <br>
      <ul>
            {% for tweet in tweets %}

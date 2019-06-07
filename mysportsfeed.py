@@ -12,8 +12,10 @@ def my_sports_feed_players_api(api_parameter):
     """Calls the players data from the mysportsfeed api"""
     Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
 
+    print("Calling the API")
     response = requests.get(SPORTSFEED_URL + f"players.json?player={api_parameter}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+    print("API called")
     response=response.json()
 
     return response
@@ -59,10 +61,10 @@ def get_athlete_info(athlete_id):
     arena = team_dictionary.get("homeVenue")
 
     player_profile = {
-    "Fullname": player_dictionary.get("firstName") + " " +
+    "fullname": player_dictionary.get("firstName") + " " +
                 player_dictionary.get("lastName"), 
     "Position": player_dictionary.get("primaryPosition"),
-    "Hieght and Weight": player_dictionary.get("height") + ", "+ 
+    "Height and Weight": player_dictionary.get("height") + ", "+ 
                 str(player_dictionary.get("weight")) + " lbs",
     "Birth": player_dictionary.get("birthDate") + ", " + player_dictionary.get("birthCity"),
     "Age": player_dictionary.get("age"),
@@ -138,5 +140,13 @@ def get_stats(athlete_id):
 
                 key = f'career_{category[0]}'
                 career_stats[key].append(season_statistics)
+
+    looping_career_stats = career_stats.copy()
+    print(career_stats)
+
+    for career_stat in looping_career_stats:
+        if len(looping_career_stats[career_stat]) ==0:
+            del career_stats[career_stat]
+    print(career_stats)
     
     return career_stats
