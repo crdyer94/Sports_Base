@@ -47,10 +47,7 @@ def login():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user:
             if user.password == login_form.password.data:
-                # login_user(user, remember=form.data)
                 return redirect('/searchpage')
- 
-    #tested to make sure that I am posting data and getting data from the form
 
     return redirect('/')
 
