@@ -34,11 +34,13 @@
     {% for career_stat_type, career_stat_list in career_stats.items() %}
     <table border = '1'>
       {% for season_stats in career_stat_list %}
-      {% for stat_type, stat in season_stats.items() %}
+      {% for stat_type in season_stats.keys() %}
       <th> {{ stat_type }} </th>
       {% endfor %}
+      {% endfor %}
+      {% for season_stats in career_stat_list %}
     <tr>
-      {% for stat_type, stat in season_stats.items() %}
+      {% for stat in season_stats.values() %}
       <td> {{ stat }}</td>
       {% endfor %}
     </tr>
@@ -65,8 +67,10 @@
      <ul>
            {% for tweet in tweets %}
 
-            {{ tweet }}
-            <br>
+           <div>
+             {{ tweet }}
+             <br>
+           </div> 
             <br>
              {% endfor %}
 
