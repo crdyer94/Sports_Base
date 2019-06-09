@@ -11,7 +11,7 @@ from sqlalchemy_json import NestedMutableJson
 db = SQLAlchemy()
 
 
-#####################################################################
+####################################################################
 # Model definitions
 
 class User(UserMixin, db.Model):
@@ -37,6 +37,11 @@ class User(UserMixin, db.Model):
         return f"""<User user_id={self.id}, 
                     email={self.email}>"""
 
+
+class SearchForm(FlaskForm):
+    """Search fields for player search"""
+    playername = StringField('Playername',
+                                validators = [InputRequired()])
 
 class LoginForm(FlaskForm):
     """Account management fields for user login"""
@@ -83,29 +88,28 @@ class Favorite(db.Model):
                                 db.ForeignKey('athletes.athlete_id'))
     user = db.relationship("User",
                            backref=db.backref("favorites", order_by=favorite_id))
-    athlete = db.relationship("Athlete",
-                                backref=db.backref("favorites"))
-    
+    # athlete = db.relationship("Athlete",
+    #                             backref=db.backref("favorites"))
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
         return f"<Favorite favorite_id={self.favorite_id}>"
 
-class Athlete(db.Model):
-    """Searched Athlete profiles"""
+# class Athlete(db.Model):
+#     """Searched Athlete profiles"""
 
-    __tablename__ = "athletes"
+#     __tablename__ = "athletes"
 
-    athlete_id = db.Column(db.Integer,
-                            primary_key=True,
-                            unique=True)
+#     athlete_id = db.Column(db.Integer,
+#                             primary_key=True,
+#                             unique=True)
 
-    athlete_data = db.Column(NestedMutableJson)
+#     athlete_data = db.Column(NestedMutableJson)
 
-    def __repr__(self):
-        """Provides representation when printed"""
-        return f"<athlete_id={self.athlete_id}>"
+#     def __repr__(self):
+#         """Provides representation when printed"""
+#         return f"<athlete_id={self.athlete_id}>"
 
 
 

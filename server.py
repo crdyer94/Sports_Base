@@ -3,7 +3,8 @@ import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
-from model import (User, LoginForm, RegisterForm, connect_to_db, db, Favorite)
+from model import (LoginForm, RegisterForm, connect_to_db, db, Favorite, User)
+# from models.user import User
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
@@ -46,10 +47,7 @@ def login():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user:
             if user.password == login_form.password.data:
-                # login_user(user, remember=form.data)
                 return redirect('/searchpage')
- 
-    #tested to make sure that I am posting data and getting data from the form
 
     return redirect('/')
 
@@ -78,9 +76,10 @@ def register_new_user():
 @login_required
 def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
+    favorites = Favorite.query.filter_by(id = current_user.id).all()
 
-
-    return render_template('searchpage.html')
+    return render_template('searchpage.html',
+                            favorites=favorites)
 
 @app.route('/searchresults', methods=['POST'])
 def display_search_results():
@@ -88,9 +87,6 @@ def display_search_results():
     playername = request.form['playername']
 
     playername = get_search_results(playername)
-
-
-    # return player_name: Test to verify request.form
 
     return render_template('searchresults.html',
                             playername=playername)
@@ -101,8 +97,7 @@ def display_athlete_info(athlete_id):
 
     athlete_info = get_athlete_info(athlete_id)
     career_stats = get_stats(athlete_id)
-    # arrests = get_arrests(athlete_id)
-    arrests = {"Arrests": "No Arrests"}
+    arrests = get_arrests(athlete_id)
     tweets = get_player_tweets(athlete_id)
     session["athlete_id"] = athlete_id
 
