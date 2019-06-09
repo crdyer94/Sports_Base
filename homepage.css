@@ -1,0 +1,36 @@
+/*CSS for homepage (url landing page)*/
+
+body {
+    
+    background-size: cover;
+    color: black;
+    font-family: Arial;
+
+}
+
+
+#userform {
+    text-align: center;
+    position: relative;
+    left: 1100px;
+    top: 75px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, .79);
+    border-radius: 20px;
+    width: 280px;
+
+
+}
+
+#homepagetitle {
+    
+    color: white;
+    font-size: 5.5em;
+    position:relative;
+    top: 300px;
+
+
+
+
+}
