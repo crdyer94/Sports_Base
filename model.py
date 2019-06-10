@@ -96,8 +96,6 @@ class Favorite(db.Model):
         return f"<Favorite favorite_id={self.favorite_id}>"
 
 
-
-
 #####################################################################
 # Helper functions
 

@@ -32,9 +32,9 @@ def display_loginpage():
                             login_form = login_form)
 
 @login_manager.user_loader
-def load_user(id):
+def load_user(user_id):
 
-    return User.query.get(int(id))
+    return User.query.get(int(user_id))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -73,7 +73,7 @@ def register_new_user():
 @login_required
 def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
-    favorites = Favorite.query.filter_by(id = current_user.id).all()
+    favorites = Favorite.query.filter_by(user_id = current_user.user_id).all()
 
     return render_template('searchpage.html',
                             favorites=favorites)
@@ -109,7 +109,7 @@ def display_athlete_info(athlete_id):
 @app.route("/addfavorite", methods=['POST'])
 def set_favorite():
     """Associates the user to their favorited athlete"""
-    favorite  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
+    favorite  = Favorite(user_id=current_user.user_id, favorited_item=session["athlete_id"])
     db.session.add(favorite) 
 
     db.session.commit()
@@ -122,7 +122,7 @@ def remove_favorite():
     #search for athlete id in the favorites table
     #remove the row from the table
 
-    favorite = Favorite.query.filter_by(id = current_user.id,
+    favorite = Favorite.query.filter_by(user_id = current_user.user_id,
                             favorited_item = session["athlete_id"]).first()
 
     db.session.delete(favorite)
