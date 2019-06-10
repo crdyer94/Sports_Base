@@ -1,0 +1,31 @@
+/*   Sitewide  */
+
+body {
+    
+    
+    font-family: Arial;
+
+}
+
+.navbar {
+    background-color: black;
+    color: black;
+    border-radius: 0px;
+    font-family: Arial;
+    
+}
+
+#site-title, #ubermelon-logo:hover, .navbar-dark .navbar-brand {
+    color: #708c46;
+
+
+}
+
+.navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
+    color: #708c46;
+
+}
+
+section {
+    margin-top: 100px;
+}

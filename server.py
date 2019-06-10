@@ -22,12 +22,12 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 @app.route('/')
-def homepage():
-    """Show homepage to allow users to sign in or register"""
+def display_loginpage():
+    """Show url landing page to allow users to sign in or register"""
     login_form = LoginForm()
     register_new_user_form = RegisterForm()
 
-    return render_template('homepage.html',
+    return render_template('loginpage.html',
                             register_new_user_form = register_new_user_form,
                             login_form = login_form)
 
@@ -65,9 +65,6 @@ def register_new_user():
         db.session.add(new_user)
         db.session.commit()
         return render_template('searchpage.html')
-
-        #tested to make sure that a new user is being created and added to my db
-    #tested to make sure taht I am posting data and getting data from the form
 
     return redirect('/')
 

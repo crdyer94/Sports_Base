@@ -43,29 +43,29 @@ def get_search_results(playername):
 
     api_playername = modify_entered_playername(playername)
 
-    try:
-        response = my_sports_feed_players_api(api_playername)
+    # try:
+    response = my_sports_feed_players_api(api_playername)
 
-        response_display = []
+    response_display = []
 
-        for obj in response["players"]:
+    for obj in response["players"]:
 
-            obj = obj["player"]
+        obj = obj["player"]
 
-            fullname = obj.get("firstName") + " " + obj.get("lastName")
-            athlete_id = obj["id"]
+        fullname = obj.get("firstName") + " " + obj.get("lastName")
+        athlete_id = obj["id"]
 
-            athlete_route = {athlete_id:fullname}
+        athlete_route = {athlete_id:fullname}
 
-            response_display.append(athlete_route)
+        response_display.append(athlete_route)
 
-        return response_display
+    return response_display
 
-    except Exception:
+    # except Exception:
 
-        response_display = handle_bad_player_search_response()
+    #     response_display = handle_bad_player_search_response()
 
-        return response_display
+    #     return response_display
 
 def handle_bad_player_search_response():
     

@@ -1,9 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Search Results</title>
-</head>
-<body>
+
 
     <h1> Results </h1>
     
@@ -12,9 +10,11 @@
     {% for player in playername %}
       <li>
          {% for athlete_id, name in player.items() %}
+
             <a href="/athletes/{{ athlete_id }}">
             {{  name  }}
             </a>
+
          {% endfor %}
           
         </a>
@@ -22,8 +22,7 @@
     {% endfor %}
   </ul>
 
-<p> <a href='/searchpage'>Back to Search</a></p>
 
-</body>
 </html>
+{% endblock %}
 
