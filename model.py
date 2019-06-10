@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "users"
 
-    id = db.Column(db.Integer,
+    user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     email = db.Column(db.String(64),
@@ -34,7 +34,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"""<User user_id={self.id}, 
+        return f"""<User user_id={self.user_id}, 
                     email={self.email}>"""
 
 
@@ -45,10 +45,10 @@ class SearchForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """Account management fields for user login"""
-    username = StringField('Username',
+    username = StringField('Username:',
                             validators = [InputRequired(),
                                             Length(max=64)])
-    password = PasswordField('Password',
+    password = PasswordField('Password:',
                             validators = [InputRequired(),
                                             Length(max=64)])
     # remember = BooleanField('Remember Me')
@@ -59,14 +59,14 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     """Account management fields for user registration"""
-    email = StringField('Email', 
+    email = StringField('Email:', 
                         validators=[InputRequired(),
                                     Email(message = 'Invalid email'),
                                     Length(max=64)])
-    username = StringField('Username',
+    username = StringField('Username:',
                             validators = [InputRequired(),
                                             Length(max=64)])
-    password = PasswordField('Password',
+    password = PasswordField('Password:',
                             validators = [InputRequired(),
                                             Length(max=64)])
     def render_field(self, field, render_kw):
@@ -82,34 +82,18 @@ class Favorite(db.Model):
     favorite_id = db.Column(db.Integer, 
                             autoincrement=True, 
                             primary_key=True)
-    id = db.Column(db.Integer,
-                        db.ForeignKey('users.id'))
-    favorited_item = db.Column(db.Integer,
-                                db.ForeignKey('athletes.athlete_id'))
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        unique=False)
+    favorited_item = db.Column(db.Integer, 
+                                nullable=False)
     user = db.relationship("User",
                            backref=db.backref("favorites", order_by=favorite_id))
-    # athlete = db.relationship("Athlete",
-    #                             backref=db.backref("favorites"))
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
         return f"<Favorite favorite_id={self.favorite_id}>"
-
-# class Athlete(db.Model):
-#     """Searched Athlete profiles"""
-
-#     __tablename__ = "athletes"
-
-#     athlete_id = db.Column(db.Integer,
-#                             primary_key=True,
-#                             unique=True)
-
-#     athlete_data = db.Column(NestedMutableJson)
-
-#     def __repr__(self):
-#         """Provides representation when printed"""
-#         return f"<athlete_id={self.athlete_id}>"
 
 
 
