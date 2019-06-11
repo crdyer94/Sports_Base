@@ -12,6 +12,7 @@ from nflarrest import get_arrests
 from twitter import get_player_tweets
 
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'abc123'
 app.jinja_env.undefined = StrictUndefined
@@ -39,14 +40,19 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ Validating entered user info with the DB"""
+    # import pdb; pdb.set_trace()
 
     login_form = LoginForm() 
 
     if login_form.validate_on_submit():
+        print("Line 45 if statement is being called")
         user = User.query.filter_by(username=login_form.username.data).first()
+        print("line 47 is being called")
         if user:
+            print("line 49 if statement is being called")
             if user.password == login_form.password.data:
-                return redirect('/searchpage')
+                print("line 51 if statement if being called")
+                return render_template('searchpage.html')
 
     return redirect('/')
 
@@ -130,13 +136,16 @@ def remove_favorite():
     
     return redirect("/searchpage")
 
+
+
 @app.route('/logout')
 @login_required
 def logout():
     """Logs out the user"""
-    del session[athlete_id]
+
     logout_user()
-    return render_template('index.html')
+    return redirect('/')
+
 
 
 if __name__ == '__main__':
