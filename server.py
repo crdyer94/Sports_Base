@@ -4,7 +4,6 @@ from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (LoginForm, RegisterForm, connect_to_db, db, Favorite, User)
-# from models.user import User
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)

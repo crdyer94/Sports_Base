@@ -8,23 +8,33 @@ body {
 }
 
 .navbar {
-    background-color: black;
+    background-color: white;
     color: black;
     border-radius: 0px;
     font-family: Arial;
+    font-size: 20px;
+
+
     
 }
 
-#site-title, #ubermelon-logo:hover, .navbar-dark .navbar-brand {
+#site-title, .navbar-dark .navbar-brand {
     color: #708c46;
-
+    font-size: 20px;
 
 }
+
 
 .navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
     color: #708c46;
 
 }
+
+.navbar-nav>li>a, .navbar-dark .navbar-nav:hover .nav-link:hover {
+    color: black;
+
+}
+
 
 section {
     margin-top: 100px;
