@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, redirect, request, make_response, session)
+from flask import (Flask, render_template, redirect, request, make_response, session, flash)
 import requests
 from flask_bootstrap import Bootstrap
 from jinja2 import StrictUndefined
@@ -45,15 +45,11 @@ def login():
     login_form = LoginForm() 
 
     if login_form.validate_on_submit():
-        print("Line 45 if statement is being called")
         user = User.query.filter_by(username=login_form.username.data).first()
-        print("line 47 is being called")
         if user:
-            print("line 49 if statement is being called")
             if user.password == login_form.password.data:
-                print("line 51 if statement if being called")
                 return render_template('searchpage.html')
-
+    flash("Sorry, the information you entered is incorrect")
     return redirect('/')
 
 
@@ -62,16 +58,18 @@ def register_new_user():
     """Adding a new user to the DB"""
 
     register_new_user_form = RegisterForm()
-
-    if register_new_user_form.validate_on_submit():
+    user = User.query.filter_by(username=register_new_user_form.username.data).first()
+    email = User.query.filter_by(email = register_new_user_form.email.data).first()
+    if user or email:
+        flash("Sorry, the username or email already exists in the database")
+        return redirect('/')
+    elif register_new_user_form.validate_on_submit():
         new_user = User(username=register_new_user_form.username.data,
                         email=register_new_user_form.email.data,
                         password=register_new_user_form.password.data)
         db.session.add(new_user)
         db.session.commit()
         return render_template('searchpage.html')
-
-    return redirect('/')
 
 
 @app.route('/searchpage')
@@ -136,8 +134,6 @@ def remove_favorite():
     
     return redirect("/searchpage")
 
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -145,8 +141,6 @@ def logout():
 
     logout_user()
     return redirect('/')
-
-
 
 if __name__ == '__main__':
     #setting debug to true to invoke the DebugToolBarExtension

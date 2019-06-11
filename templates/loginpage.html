@@ -16,6 +16,16 @@
 
 {% block body %}
 
+{% for flash in get_flashed_messages() %}
+      <div class="alert alert-danger"
+        style="background-color: pink;
+        color: red; font-family: Arial; height: 20px;">
+      {{ flash }}
+      </div>
+{% endfor %}
+  
+
+
     <div class="container">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -54,6 +64,8 @@
     </div>
 
 </div>
+
+
 
 
 {% endblock %}
