@@ -6,22 +6,18 @@
     <h1> Results </h1>
     
 
-  <ul>
+  
     {% for player in playername %}
-      <li>
-         {% for athlete_id, name in player.items() %}
+    <div class="card" style="width: 18rem;">
+      <img src={{ player["profile_picture"] }} class="card-img-top" alt="...">
+      <img src = >
+      <div class="card-body">
+        <h5 class="card-title">{{player["name"]}}</h5>
+        <a href="/athletes/{{ player["athlete_id"] }}" class="btn btn-primary">Profile</a>
+      </div>
+    </div>
 
-            <a href="/athletes/{{ athlete_id }}">
-            {{  name  }}
-            </a>
-
-         {% endfor %}
-          
-      </li>
     {% endfor %}
-  </ul>
+  
 
-
-<!-- </html> -->
 {% endblock %}
-

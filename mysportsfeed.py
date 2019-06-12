@@ -54,8 +54,9 @@ def get_search_results(playername):
 
         fullname = obj.get("firstName") + " " + obj.get("lastName")
         athlete_id = obj["id"]
+        player_picture = obj["officialImageSrc"]
 
-        athlete_route = {athlete_id:fullname}
+        athlete_route = {"athlete_id": athlete_id, "name":fullname, "profile_picture": player_picture}
 
         response_display.append(athlete_route)
 
