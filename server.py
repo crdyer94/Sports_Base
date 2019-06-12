@@ -151,7 +151,7 @@ def logout():
 
 if __name__ == '__main__':
     #setting debug to true to invoke the DebugToolBarExtension
-    app.debug = False
+    app.debug = True
     connect_to_db(app)
     # app.jinja_env.auto_reload = app.debug
 
