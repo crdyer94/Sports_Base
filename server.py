@@ -32,25 +32,27 @@ def display_loginpage():
                             login_form = login_form)
 
 @login_manager.user_loader
-def load_user(user_id):
-
-    return User.query.get(int(user_id))
-
+def load_user(id):
+   
+    return User.query.get(int(id))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ Validating entered user info with the DB"""
     # import pdb; pdb.set_trace()
 
-    login_form = LoginForm() 
 
+    login_form = LoginForm() 
+    user = User.query.filter_by(username=login_form.username.data).first()
+    
     if login_form.validate_on_submit():
-        user = User.query.filter_by(username=login_form.username.data).first()
         if user:
             if user.password == login_form.password.data:
-                return render_template('searchpage.html')
-    flash("Sorry, the information you entered is incorrect")
-    return redirect('/')
+                login_user(user)
+                return redirect('/searchpage')
+    else:
+        flash("Sorry, the information you entered is incorrect")
+        return redirect('/')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -69,14 +71,19 @@ def register_new_user():
                         password=register_new_user_form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        return render_template('searchpage.html')
+        login_user(new_user)
+        return redirect('/searchpage')
+
 
 
 @app.route('/searchpage')
-@login_required
+@login_required 
 def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
-    favorites = Favorite.query.filter_by(user_id = current_user.user_id).all()
+    # favorites = Favorite.query.filter_by(id = current_user.id).all()
+    # if len(favorites) == 0:
+    #     favorites = "You currently have no favorites"
+    favorites = "No favorites"
 
     return render_template('searchpage.html',
                             favorites=favorites)
@@ -112,7 +119,7 @@ def display_athlete_info(athlete_id):
 @app.route("/addfavorite", methods=['POST'])
 def set_favorite():
     """Associates the user to their favorited athlete"""
-    favorite  = Favorite(user_id=current_user.user_id, favorited_item=session["athlete_id"])
+    favorite  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
     db.session.add(favorite) 
 
     db.session.commit()
@@ -125,7 +132,7 @@ def remove_favorite():
     #search for athlete id in the favorites table
     #remove the row from the table
 
-    favorite = Favorite.query.filter_by(user_id = current_user.user_id,
+    favorite = Favorite.query.filter_by(id = current_user.id,
                             favorited_item = session["athlete_id"]).first()
 
     db.session.delete(favorite)

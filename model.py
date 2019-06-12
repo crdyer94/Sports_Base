@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     email = db.Column(db.String(64),
@@ -34,7 +34,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"""<User user_id={self.user_id}, 
+        return f"""<User id={self.id}, 
                     email={self.email}>"""
 
 
@@ -82,8 +82,8 @@ class Favorite(db.Model):
     favorite_id = db.Column(db.Integer, 
                             autoincrement=True, 
                             primary_key=True)
-    user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.user_id'),
+    id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'),
                         unique=False)
     favorited_item = db.Column(db.Integer, 
                                 nullable=False)
