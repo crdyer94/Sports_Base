@@ -79,7 +79,7 @@ Weight: {{ athlete_info["Weight"]}} lbs
 
 </div>
 
-<div>
+<div id="athletearrests">
   <table border = '1'>
     <th> Arrest Date </th>
     <th> Crime </th>
@@ -87,7 +87,7 @@ Weight: {{ athlete_info["Weight"]}} lbs
     <th> Outcome </th>
     <tr>
     {% for arrest_detail in arrests.values() %}
-    <td> {{arrest_detail}}</td>
+    <td> {{arrest_detail}} </td>
     {% endfor %}
     </tr>
 
