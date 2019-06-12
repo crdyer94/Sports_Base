@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 {% block body %}
-<!DOCTYPE html>
+<link rel="stylesheet" href="/static/css/searchresults.css">
 
-
-    <h1> Results </h1>
+    <h1> Results... </h1>
     
 
-  
-    {% for player in playername %}
+
+   
+    {% for player in playername%}
     <div class="card" style="width: 18rem;">
-      <img src={{ player["profile_picture"] }} class="card-img-top" alt="...">
-      <img src = >
+      <img src={{ player["profile_picture"] }} class="card-img-top" alt="Image Not Found">
       <div class="card-body">
-        <h5 class="card-title">{{player["name"]}}</h5>
-        <a href="/athletes/{{ player["athlete_id"] }}" class="btn btn-primary">Profile</a>
+        <a href="/athletes/{{ player["athlete_id"] }}" class="profile-button btn btn-primary">{{player["name"]}}</a>
       </div>
     </div>
+    <br>
 
     {% endfor %}
-  
+
+
+
 
 {% endblock %}
