@@ -3,112 +3,98 @@
 {%block body%}
  <link rel="stylesheet" href="/static/css/athleteprofile.css">
 
- <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<div class='row'>
-  <div class = profile-column-l>
+<div class='row' style="background-color: #F0FFF2">
+<div class = profile-column-l>
     <img src = {{ athlete_info["rosterpic"] }}>
  </div>
  <div class = profile-column-r>
-<h1>{{ athlete_info["fullname"] }}</h1>
+<div><font size="14"> {{ athlete_info["fullname"] }}</font>
+<button class = "athlete-button" onclick="showStats();">Career Stats</button>
+<button class = "athlete-button" onclick="showTweets();">Latest Tweets</button>
+<button class = "athlete-button" onclick="showArrests();">Arrests</button>
+</div>
+
+<div class="column-l">
+ College: {{ athlete_info["College"]}}
+ <br>
+ High School: {{ athlete_info["High School"]}}
+ <br>
+ From: {{ athlete_info["from"]}}
+ <br>
+ Age: {{ athlete_info["Age"]}}
+ <br>
+Height: {{ athlete_info["Height"]}}
 <br>
+DOB: {{ athlete_info["Birth"]}}
+</div>
+<div class="column-r">
+Team: {{ athlete_info["current_team"] }}, {{ athlete_info["team_abbr"] }}
 <br>
+Arena: {{ athlete_info["arena"]}}
 <br>
+Position: {{ athlete_info["Position"] }}
 <br>
-<button class = "athlete-button" onclick="showBioInfo()">Bio Info</button>
-<button class = "athlete-button" onclick="showStats()">Career Stats</button>
-<button class = "athlete-button" onclick="showTweets()">Latest Tweets</button>
-<button class = "athlete-button" onclick="showArrests()">Arrests</button>
+Jersey Number: {{ athlete_info["jersey_num"]}}
+<br>
+Weight: {{ athlete_info["Weight"]}} lbs
+</div>
 </div>
 </div>
 
-<div id="athletebio">
-  <div class="row">
-    <div class="column-l">
-      Team: {{ athlete_info["current_team"] }}, {{ athlete_info["team_abbr"] }}
+<div id="athletestats"> 
+{% for career_stat_type, career_stat_list in career_stats.items() %}
+<table border = '1'>
+  {% for season_stats in career_stat_list %}
+  {% for stat_type in season_stats %}
+  <th> {{ stat_type }} </th>
+  {% endfor %}
+<tr>
+  {% for stat in season_stats.values() %}
+  <td> {{ stat }}</td>
+  {% endfor %}
+</tr>
+
+{% endfor %}
+  
+</table>
+
+<br>
+{% endfor %}
+
+</div>
+
+<div id="athletetweets">
+ <ul>
+       {% for tweet in tweets %}
+
+       <div>
+         {{ tweet }}
+         <br>
+       </div> 
         <br>
-       Arena: {{ athlete_info["arena"]}}
-       <br>
-       Position: {{ athlete_info["Position"] }}
-       <br>
-       Jersey Number: {{ athlete_info["jersey_num"]}}
-       <br>
-       Height: {{ athlete_info["Height"]}}
-       <br>
-       Weight: {{ athlete_info["Weight"]}} lbs
-     </div>
-    <div class="column-r">
-         College: {{ athlete_info["College"]}}
-         <br>
-         High School: {{ athlete_info["High School"]}}
-         <br>
-         From: {{ athlete_info["from"]}}
-         <br>
-         Age: {{ athlete_info["Age"]}}
-         <br>
-         DOB: {{ athlete_info["Birth"]}}
-       </div>
-  </div>
-  </div>
+         {% endfor %}
 
-<br>
-<br>
+</ul>
 
 
+</div>
 
-  <div> 
-    <h3>Career Stats</h3>
-
-    {% for career_stat_type, career_stat_list in career_stats.items() %}
-    <table border = '1'>
-      {% for season_stats in career_stat_list %}
-      {% for stat_type in season_stats %}
-      <th> {{ stat_type }} </th>
-      {% endfor %}
+<div>
+  <table border = '1'>
+    <th> Arrest Date </th>
+    <th> Crime </th>
+    <th> Description </th>
+    <th> Outcome </th>
     <tr>
-      {% for stat in season_stats.values() %}
-      <td> {{ stat }}</td>
-      {% endfor %}
+    {% for arrest_detail in arrests.values() %}
+    <td> {{arrest_detail}}</td>
+    {% endfor %}
     </tr>
+
+  </table>
     
-    {% endfor %}
-      
-    </table>
-    
+</div>
 
-      
-    <br>
-    {% endfor %}
-
-  </div>
-
-
-
-  <br>
-  <br>
- 
-  <div>
-    <h3>Tweets</h3>
-    <br>
-     <ul>
-           {% for tweet in tweets %}
-
-           <div>
-             {{ tweet }}
-             <br>
-           </div> 
-            <br>
-             {% endfor %}
-
-    </ul>
-
- 
-  </div>
-
-    <div>
-    {{ arrests }}
-  </div>
 
   <div>
      <form action = "/addfavorite" method="POST">
