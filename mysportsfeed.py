@@ -93,9 +93,9 @@ def get_athlete_info(athlete_id):
     "fullname": player_dictionary.get("firstName") + " " +
                 player_dictionary.get("lastName"), 
     "Position": player_dictionary.get("primaryPosition"),
-    "Height and Weight": player_dictionary.get("height") + ", "+ 
-                str(player_dictionary.get("weight")) + " lbs",
-    "Birth": player_dictionary.get("birthDate") + ", " + player_dictionary.get("birthCity"),
+    "Height": player_dictionary.get("height"),
+    "Weight": player_dictionary.get("weight"),
+    "Birth": player_dictionary.get("birthDate"),
     "Age": player_dictionary.get("age"),
     "High School": player_dictionary.get("highSchool"),
     "College": player_dictionary.get("college"),
@@ -103,7 +103,8 @@ def get_athlete_info(athlete_id):
     "current_team": team_dictionary.get("city") + " " + team_dictionary.get("name"),
     "team_abbr": team_dictionary.get("abbreviation"),
     "jersey_num": player_dictionary.get("jerseyNumber"), 
-    "arena": arena.get("name")
+    "arena": arena.get("name"),
+    "from": player_dictionary.get("birthCity")
 
     # "rosterstatus": player_dict.get("currentRosterStatus"),
     

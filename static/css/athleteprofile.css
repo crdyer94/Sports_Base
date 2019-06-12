@@ -1,49 +1,48 @@
-div.list div {
-  cursor: pointer;
+#athletebio {
+  width: 100%;
+  text-align: left;
+  background-color: lightgreen;
+  margin-top: 0px;
+  padding-left: 50px;
 }
 
-div.fav:before {
-  content:"";
-  width:16px;
-  height: 16px;
-  top:3px;
-  margin-right:7px;
-  display: inline-block;
-  background-position: 0;
-  position: relative;
-  background:url('http://iconizer.net/files/Fugue_Icons/orig/tick-red.png') no-repeat;
+
+.column-l {
+  float: left;
+  width: 50%;
 }
-div#fav_button{
-  display:inline;
-  background-color: #e8e9ea;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e8e9ea));
-  background: -moz-linear-gradient(center top, #ffffff 0%, #e8e9ea 100%);
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  width:150px;
-  border-radius: 2px;
-  text-shadow: 1px 1px 0px #ffffff;
-  padding: 7px 8px;
-  border-color: #c9cdd1;
-  border-width: 1px;
-  border-style: solid;
-  text-align: center;
-  font-family: Helvetica;
-  font-size: 14px;
-  line-height: 24px;
-  color: #000000;
-  font-weight: bold;
-  text-decoration:none;
+
+.column-r {
+  float: right;
+  width: 50%;
 }
-div#fav_button:hover{
-  -webkit-box-shadow: 0px 0px 3px 1px #c9cdd1;
-  -moz-box-shadow: 0px 0px 3px 1px #c9cdd1;
-  box-shadow: 0px 0px 3px 1px #c9cdd1;
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
-div#fav_botton:active{
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e8e9ea), color-stop(100%,#ffffff));
-  background: -moz-linear-gradient(center top, #e8e9ea 0%, #ffffff 100%);
-  -webkit-box-shadow: 0px 0px 3px 1px #c9cdd1;
-  -moz-box-shadow: 0px 0px 3px 1px #c9cdd1;
-  box-shadow: 0px 0px 3px 1px #c9cdd1;
+
+.athlete-button {
+  color: #18A833;
+  background-color: white;
+  border-color: #18A833;
+  border-radius: 8px;
+}
+
+.athlete-button:hover {
+    color: white;
+    background-color: #18A833
+
+
+}
+
+.profile-column-l {
+  float: left;
+  width: 15%;
+}
+
+.profile-column-r {
+  float: right;
+  width: 85%;
 }

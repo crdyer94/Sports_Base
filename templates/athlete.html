@@ -3,38 +3,59 @@
 {%block body%}
  <link rel="stylesheet" href="/static/css/athleteprofile.css">
 
-<div>
-<h1> {{ athlete_info["fullname"] }}</h1>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<img src = {{ athlete_info["rosterpic"] }}>
+
+<div class='row'>
+  <div class = profile-column-l>
+    <img src = {{ athlete_info["rosterpic"] }}>
+ </div>
+ <div class = profile-column-r>
+<h1>{{ athlete_info["fullname"] }}</h1>
+<br>
+<br>
+<br>
+<br>
+<button class = "athlete-button" onclick="showBioInfo()">Bio Info</button>
+<button class = "athlete-button" onclick="showStats()">Career Stats</button>
+<button class = "athlete-button" onclick="showTweets()">Latest Tweets</button>
+<button class = "athlete-button" onclick="showArrests()">Arrests</button>
 </div>
-<br>
+</div>
 
-
-<!-- <div class="favorite_button">
-  <button id="button-favorite-current-player">Favorite This Player!</button>
-</div> -->
-
-<br>
-<br>
-
-
-    <div>
-    <ul>
-           {% for key, item in athlete_info.items() %}
-              {{  key }} : {{ item }}
-              <br>
-           {% endfor %}
-
-           <br>
-           <br>
-           <br>
-    </ul>
+<div id="athletebio">
+  <div class="row">
+    <div class="column-l">
+      Team: {{ athlete_info["current_team"] }}, {{ athlete_info["team_abbr"] }}
+        <br>
+       Arena: {{ athlete_info["arena"]}}
+       <br>
+       Position: {{ athlete_info["Position"] }}
+       <br>
+       Jersey Number: {{ athlete_info["jersey_num"]}}
+       <br>
+       Height: {{ athlete_info["Height"]}}
+       <br>
+       Weight: {{ athlete_info["Weight"]}} lbs
+     </div>
+    <div class="column-r">
+         College: {{ athlete_info["College"]}}
+         <br>
+         High School: {{ athlete_info["High School"]}}
+         <br>
+         From: {{ athlete_info["from"]}}
+         <br>
+         Age: {{ athlete_info["Age"]}}
+         <br>
+         DOB: {{ athlete_info["Birth"]}}
+       </div>
+  </div>
   </div>
 
-  <div>
-    {{ arrests }}
-  </div>
+<br>
+<br>
+
+
 
   <div> 
     <h3>Career Stats</h3>
@@ -85,6 +106,10 @@
  
   </div>
 
+    <div>
+    {{ arrests }}
+  </div>
+
   <div>
      <form action = "/addfavorite" method="POST">
       <input type="submit" name="favorite" value="Favorite">
@@ -98,7 +123,7 @@
     </form>
   </div>
 
-
+<script src="/static/JS/athlete_info.js"></script>
 </body>
 </html>
 
