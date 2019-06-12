@@ -20,19 +20,24 @@ body {
 
 
 .navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
-    color: black;
+    color: #18A833;
 
 }
 
 .navbar-nav>li>a, .navbar-dark .navbar-nav:hover .nav-link:hover {
-    color: #20CC67;
+    color: black;
 
 }
 
-#navbaritem {
-     color: black;
+.mystyles {
+    background-color: #18A833; 
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
 
 }
+
 
 
 section {
