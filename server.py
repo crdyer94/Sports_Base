@@ -80,20 +80,32 @@ def register_new_user():
 @login_required 
 def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
-    # favorites = Favorite.query.filter_by(id = current_user.id).all()
-    # if len(favorites) == 0:
-    #     favorites = "You currently have no favorites"
-    favorites = "No favorites"
+    # favorites = []
+    # favorite_search = Favorite.query.filter_by(id = current_user.id).all()
+    # if favorites_search:
+    #     for athlete_id in favorites_search:
+    #         athlete_info = get_search_results(athlete_id)
+    #         favorites.append(athlete_info)
+    #     return render_template('searchpage.html',
+    #                         favorites=favorites)
+    # else:
+    #     favorites = ["You currently do not have any favorites"]
+    #     return render_template('searchpage.html',
+    #                     favorites=favorites)
 
+    playername = ""
+    playername= get_search_results(playername)
     return render_template('searchpage.html',
-                            favorites=favorites)
+                            playername=playername)
 
 @app.route('/searchresults', methods=['POST'])
 def display_search_results():
 
     playername = request.form['playername']
+    print(playername)
 
     playername = get_search_results(playername)
+    athlete_id = playername[0]["athlete_id"]
 
     return render_template('searchresults.html',
                             playername=playername)
@@ -103,10 +115,11 @@ def display_athlete_info(athlete_id):
     """Athlete profile page"""
 
     athlete_info = get_athlete_info(athlete_id)
-    career_stats = get_stats(athlete_id)
     arrests = get_arrests(athlete_id)
     tweets = get_player_tweets(athlete_id)
+    career_stats = get_stats(athlete_id)
     session["athlete_id"] = athlete_id
+
 
     return render_template('athlete.html', 
                             athlete_info = athlete_info,
@@ -116,30 +129,20 @@ def display_athlete_info(athlete_id):
                             tweets = tweets)
 
 
-@app.route("/addfavorite", methods=['POST'])
-def set_favorite():
-    """Associates the user to their favorited athlete"""
-    favorite  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
-    db.session.add(favorite) 
+@app.route("/updatefavorites") #Why no Post method?
+def update_favorites():
+    """The user clicked to update their favorites. 
+    This checks whether or not to remove the athlete 
+    in the session as a favorite"""
 
+    check_favorite = Favorite(id=current_user.id, favorited_item=session["athlete_id"]).first()
+
+    if not check_favorite:
+        new_update  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
+        db.session.add(favorite) 
+    else:
+        db.session.delete(favorite)
     db.session.commit()
-
-    return redirect("/searchpage")
-
-@app.route("/removefavorite", methods=['POST'])
-def remove_favorite():
-    """Removes the association of the user to the favorited athlete"""
-    #search for athlete id in the favorites table
-    #remove the row from the table
-
-    favorite = Favorite.query.filter_by(id = current_user.id,
-                            favorited_item = session["athlete_id"]).first()
-
-    db.session.delete(favorite)
-    db.session.commit()
-
-    
-    return redirect("/searchpage")
 
 @app.route('/logout')
 @login_required
