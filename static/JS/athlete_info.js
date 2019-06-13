@@ -11,7 +11,6 @@ function showLoader() {
   var x = document.getElementById("searchresultcards");
   x.innerHTML="<img class = 'loading'; src= '/static/nfl.gif'>";
 
-
 }
 
 function showStats() {

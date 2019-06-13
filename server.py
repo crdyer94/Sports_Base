@@ -98,7 +98,7 @@ def display_search_page():
 def display_search_results():
 
     playername = request.form['playername']
-    print(playername)
+
 
     playername = get_search_results(playername)
     athlete_id = playername[0]["athlete_id"]
@@ -130,7 +130,6 @@ def update_favorites():
     """The user clicked to update their favorites. 
     This checks whether or not to remove the athlete 
     in the session as a favorite"""
-    print("The update favs route is being called")
 
     check_favorite = Favorite.query.filter(Favorite.favorited_item==session["athlete_id"]).first()
 

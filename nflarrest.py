@@ -29,13 +29,11 @@ def get_arrests(athlete_id):
     link_name = NFLARREST_URL + f'/{player_name}'
     
     try:
-        print("Calling NFL arrest API")
+       
         response = requests.get(
                 f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
                 headers={'user-agent': 'Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0'})
-        print("NFL arrest API called")
 
-        #if status is bad call handler + log error
         api_player_arrest_information = response.json()[0]
         player_arrest_information = { 
                                 "Arrest Date" : api_player_arrest_information.get("Date"),
@@ -51,7 +49,6 @@ def get_arrests(athlete_id):
 
 
 def handle_bad_arrest_response():
-    print("NFL arrest bad response handler")
-
+    
     arrest_error_response = {"Response": "No arrests for this player"}
     return arrest_error_response

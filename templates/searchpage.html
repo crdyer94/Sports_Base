@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
 <link rel="stylesheet" href="/static/css/search.css">
+<script src="/static/JS/athlete_info.js"></script>
+ <div id ="searchresultcards">
 
 <h1> Welcome </h1>
+<h2>Your favorites:</h2>
 
 
-    <div id ="searchresultcards">
+   
     
      <div style="display: grid; grid-template-columns: auto auto auto auto;">
     {% for player in favorite_players%}
@@ -20,19 +23,5 @@
     {% endfor %}
   </div>
  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}
