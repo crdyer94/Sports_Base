@@ -10,12 +10,10 @@
   </div>
   <div class = profile-column-r>
     <div><font size="14"> {{ athlete_info["fullname"] }}</font>
-    <button class= "athlete-favorite" onclick="updatefavs();">Favorite</button>
     <button class = "athlete-button" onclick="showStats();">Career Stats</button>
     <button class = "athlete-button" onclick="showTweets();">Latest Tweets</button>
     <button class = "athlete-button" onclick="showArrests();">Arrests</button>
     </div>
-
 
 
   <div class="column-l">
@@ -97,6 +95,26 @@
   </table>
     
 </div>
+
+
+
+
+
+
+
+
+<div>
+
+
+<button type="button" id="fav">Favorite</button>
+      <script>
+        document.getElementById('fav').addEventListener('click', function() {
+            window.location = '/updatefavorites'
+        })
+      </script>
+
+</div>
+
 
 <script src="/static/JS/athlete_info.js"></script>
 </body>

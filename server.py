@@ -128,21 +128,27 @@ def display_athlete_info(athlete_id):
                             tweets = tweets)
 
 
-@app.route("/updatefavorites", methods=['POST'])
+@app.route("/updatefavorites", methods=['GET'])
 def update_favorites():
     """The user clicked to update their favorites. 
     This checks whether or not to remove the athlete 
     in the session as a favorite"""
     print("The update favs route is being called")
 
-    check_favorite = Favorite(id=current_user.id, favorited_item=session["athlete_id"]).first()
+    check_favorite = Favorite.query.filter_by(id=current_user.id, favorited_item=session["athlete_id"]).first()
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!getting the error here
 
-    if not check_favorite:
+    if check_favorite is None:
         new_update  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
         db.session.add(favorite) 
+        print("A new fav record has been created")
     else:
         db.session.delete(favorite)
+        print("A fav record has been removed")
     db.session.commit()
+    print("This favorite has been commited")
+
+    return redirect('/athletes/<athlete_id>')
 
 @app.route('/logout')
 @login_required
