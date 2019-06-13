@@ -3,11 +3,12 @@
 <link rel="stylesheet" href="/static/css/search.css">
 <script src="/static/JS/athlete_info.js"></script>
 
+    <div id ="searchresultcards">
     <h1> Results... </h1>
     
 
 
-     <div id ="searchresultcards" style="display: grid; grid-template-columns: auto auto auto auto;">
+     <div style="display: grid; grid-template-columns: auto auto auto auto;">
     {% for player in playername%}
 
     <div class="card" style="width: 18rem;">
@@ -19,7 +20,7 @@
 
     {% endfor %}
   </div>
-
+ </div>
 
 
 

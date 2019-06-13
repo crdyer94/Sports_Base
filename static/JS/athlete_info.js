@@ -8,13 +8,11 @@ $(window).ready(hideLoader);
 setTimeout(hideLoader, 20 * 1000);
 
 function showLoader() {
-
   var x = document.getElementById("searchresultcards");
-  x.innerHTML="<img src= '/static/nfl.gif'>";
+  x.innerHTML="<img class = 'loading'; src= '/static/nfl.gif'>";
 
 
 }
-
 
 function showStats() {
   var x = document.getElementById("athletestats");
@@ -43,24 +41,9 @@ function showArrests() {
   }
 }
 
+function updatefavs() {
+  console.log("Hey this is being called")
+  var x = document.getElementById("fav_button").addEventListener('click', 
+    function() {let url = "/updatefavorites"; window.location = url;})
 
-function updateFavoriteAthletes(event){
-
-  console.log("Hey we got to line 32");
-
-    let url = "/updatefavorites"; 
-
-    $.get(url, setColor); 
 }
-
-function setColor() {
-
-  console.log("Hey this works now");
-}
-
-
-
-
-// $("#button-favorite-current-doctor").click(function(){
-//         $(this).text($(this).text() == 'Favorite This Doctor!' ? 'Unfavorite This Doctor' : 'Favorite This Doctor!');
-//     });

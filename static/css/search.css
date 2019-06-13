@@ -16,4 +16,9 @@
 .card-body {
     text-align: center;
 }
+.loading {
 
+    justify-content: center;
+    width: 100%;
+
+}

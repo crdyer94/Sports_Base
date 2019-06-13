@@ -10,11 +10,13 @@
   </div>
   <div class = profile-column-r>
     <div><font size="14"> {{ athlete_info["fullname"] }}</font>
-    <button class="athlete-button" onclick="updateFavoriteAthletes()"> Add to Favorites </button>
+    <button class= "athlete-favorite" onclick="updatefavs();">Favorite</button>
     <button class = "athlete-button" onclick="showStats();">Career Stats</button>
     <button class = "athlete-button" onclick="showTweets();">Latest Tweets</button>
     <button class = "athlete-button" onclick="showArrests();">Arrests</button>
     </div>
+
+
 
   <div class="column-l">
    College: {{ athlete_info["College"]}}
@@ -95,7 +97,6 @@
   </table>
     
 </div>
-
 
 <script src="/static/JS/athlete_info.js"></script>
 </body>

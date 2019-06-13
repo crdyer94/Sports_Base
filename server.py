@@ -90,13 +90,12 @@ def display_search_page():
     #                         favorites=favorites)
     # else:
     #     favorites = ["You currently do not have any favorites"]
-    #     return render_template('searchpage.html',
-    #                     favorites=favorites)
+    # #     return render_template('searchpage.html',
+    # #                     favorites=favorites)
 
-    playername = ""
-    playername= get_search_results(playername)
-    return render_template('searchpage.html',
-                            playername=playername)
+    # playername = ""
+    # playername= get_search_results(playername)
+    return render_template('searchpage.html')
 
 @app.route('/searchresults', methods=['POST'])
 def display_search_results():
@@ -129,11 +128,12 @@ def display_athlete_info(athlete_id):
                             tweets = tweets)
 
 
-@app.route("/updatefavorites") #Why no Post method?
+@app.route("/updatefavorites", methods=['POST'])
 def update_favorites():
     """The user clicked to update their favorites. 
     This checks whether or not to remove the athlete 
     in the session as a favorite"""
+    print("The update favs route is being called")
 
     check_favorite = Favorite(id=current_user.id, favorited_item=session["athlete_id"]).first()
 

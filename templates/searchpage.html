@@ -3,17 +3,6 @@
 <link rel="stylesheet" href="/static/css/search.css">
 
 <h1> Welcome </h1>
-<div style="display: grid; grid-template-columns: auto auto auto auto;">
-    {% for player in playername%}
 
-    <div class="card" style="width: 18rem;">
-      <img src={{ player["profile_picture"] }} class="card-img-top" onerror="this.src='/static/blank-profile-picture.png'">
-      <div class="card-body">
-        <a href="/athletes/{{ player["athlete_id"] }}" class="profile-button btn btn-primary">{{player["name"]}}</a>
-      </div>
-    </div>
-
-    {% endfor %}
-  </div>
 
 {% endblock %}
