@@ -84,11 +84,6 @@ def get_search_results(playername):
 
     return response_display
 
-    # except Exception:
-
-    #     response_display = handle_bad_player_search_response()
-
-    #     return response_display
 
 def handle_bad_player_search_response():
     
@@ -126,8 +121,6 @@ def get_athlete_info(athlete_id):
     "jersey_num": player_dictionary.get("jerseyNumber"), 
     "arena": arena.get("name"),
     "from": player_dictionary.get("birthCity")
-
-    # "rosterstatus": player_dict.get("currentRosterStatus"),
     
     }
 
@@ -201,16 +194,12 @@ def get_stats(athlete_id):
     return career_stats
 
 
-
-
     try:
    
         response = requests.get(
                 f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
                 headers={'user-agent': 'Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0'})
 
-
-        #if status is bad call handler + log error
         api_player_arrest_information = response.json()[0]
         player_arrest_information = { 
                                 "Arrest Date" : api_player_arrest_information.get("Date"),

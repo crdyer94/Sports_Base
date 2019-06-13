@@ -39,9 +39,6 @@ def load_user(id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ Validating entered user info with the DB"""
-    # import pdb; pdb.set_trace()
-
-
     login_form = LoginForm() 
     user = User.query.filter_by(username=login_form.username.data).first()
     
