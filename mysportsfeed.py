@@ -22,6 +22,28 @@ def my_sports_feed_players_api(api_parameter):
 
     return json_api_request
 
+def get_favorites(athlete_id):
+    """Gets information from the user's favorite players"""
+
+    response = my_sports_feed_players_api(athlete_id)
+
+    response_display = []
+
+    for obj in response["players"]:
+
+        obj = obj["player"]
+
+        fullname = obj.get("firstName") + " " + obj.get("lastName")
+        athlete_id = obj["id"]
+        player_picture = obj["officialImageSrc"]
+
+        athlete_route = {"athlete_id": athlete_id, "name":fullname, "profile_picture": player_picture}
+
+        response_display.append(athlete_route)
+
+    return response_display
+
+
 def modify_entered_playername(playername):
     """Alters the entered player name to the correct 
     format to search the mysportsfeed api"""

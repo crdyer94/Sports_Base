@@ -7,7 +7,7 @@ from model import (LoginForm, RegisterForm, connect_to_db, db, Favorite, User)
 from sqlalchemy import update
 from flask_login import (LoginManager, login_user, login_required,
                         logout_user, current_user)
-from mysportsfeed import get_search_results, get_athlete_info, get_stats
+from mysportsfeed import get_search_results, get_athlete_info, get_stats, get_favorites
 from nflarrest import get_arrests
 from twitter import get_player_tweets
 
@@ -80,22 +80,19 @@ def register_new_user():
 @login_required 
 def display_search_page():
     """Displays the searchpage. This is the user's homepage"""
-    # favorites = []
-    # favorite_search = Favorite.query.filter_by(id = current_user.id).all()
-    # if favorites_search:
-    #     for athlete_id in favorites_search:
-    #         athlete_info = get_search_results(athlete_id)
-    #         favorites.append(athlete_info)
-    #     return render_template('searchpage.html',
-    #                         favorites=favorites)
-    # else:
-    #     favorites = ["You currently do not have any favorites"]
-    # #     return render_template('searchpage.html',
-    # #                     favorites=favorites)
+    favorite_players = []
+    favorites = Favorite.query.filter_by(id = current_user.id).all()
 
-    # playername = ""
-    # playername= get_search_results(playername)
-    return render_template('searchpage.html')
+    if len(favorites) > 0:
+        for favorite in favorites:
+            player = get_favorites(favorite.favorited_item)
+            player_info = player[0]
+            favorite_players.append(player_info)
+    else:
+        favorite_players = ["Search and favorite a player!"]
+
+    return render_template('searchpage.html',
+                                favorite_players = favorite_players)
 
 @app.route('/searchresults', methods=['POST'])
 def display_search_results():
@@ -135,20 +132,18 @@ def update_favorites():
     in the session as a favorite"""
     print("The update favs route is being called")
 
-    check_favorite = Favorite.query.filter_by(id=current_user.id, favorited_item=session["athlete_id"]).first()
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!getting the error here
+    check_favorite = Favorite.query.filter(Favorite.favorited_item==session["athlete_id"]).first()
 
     if check_favorite is None:
         new_update  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
-        db.session.add(favorite) 
-        print("A new fav record has been created")
+        db.session.add(new_update) 
+        
     else:
-        db.session.delete(favorite)
-        print("A fav record has been removed")
+        db.session.delete(check_favorite)
+       
     db.session.commit()
-    print("This favorite has been commited")
-
-    return redirect('/athletes/<athlete_id>')
+    
+    return display_athlete_info(session["athlete_id"])
 
 @app.route('/logout')
 @login_required
