@@ -49,6 +49,13 @@ def get_arrests(athlete_id):
 
 
 def handle_bad_arrest_response():
+    """Handles responses for players that do not have any arrests"""
     
-    arrest_error_response = {"Response": "No arrests for this player"}
+    arrest_error_response = { 
+                                "Arrest Date" : "None",
+                                "Crime Category" : "None"
+                                + ": " + "None", 
+                                "Description": "No arrests found for this player",
+                                "Outcome": "None"
+                                                }
     return arrest_error_response

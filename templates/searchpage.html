@@ -7,10 +7,9 @@
 <h1> Welcome </h1>
 <h2>Your favorites:</h2>
 
-
-   
     
      <div style="display: grid; grid-template-columns: auto auto auto auto;">
+
     {% for player in favorite_players%}
 
     <div class="card" style="width: 18rem;">
@@ -22,6 +21,9 @@
 
     {% endfor %}
   </div>
+
+
+
  </div>
 
 {% endblock %}

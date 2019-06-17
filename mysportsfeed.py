@@ -14,10 +14,8 @@ def my_sports_feed_players_api(api_parameter):
     """
     Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
 
-    print("Calling the mysports feed player API")
     api_request = requests.get(SPORTSFEED_URL + f"players.json?player={api_parameter}",
          auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-    print("mysportsfeed player API called")
     json_api_request = api_request.json()
 
     return json_api_request

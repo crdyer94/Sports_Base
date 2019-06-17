@@ -86,7 +86,10 @@ def display_search_page():
             player_info = player[0]
             favorite_players.append(player_info)
     else:
-        favorite_players = ["Search and favorite a player!"]
+        favorite_players = [{"athlete_id": 12606, 
+        "name": "No Favs Yet, Click for T.Brady", 
+        "profile_picture": '/static/blank-profile-picture.png'}]
+
 
     return render_template('searchpage.html',
                                 favorite_players = favorite_players)
@@ -151,7 +154,7 @@ def logout():
 
 if __name__ == '__main__':
     #setting debug to true to invoke the DebugToolBarExtension
-    app.debug = True
+    app.debug = False
     connect_to_db(app)
     # app.jinja_env.auto_reload = app.debug
 
