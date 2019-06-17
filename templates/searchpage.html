@@ -5,6 +5,10 @@
  <div id ="searchresultcards">
 
 <h1> Welcome </h1>
+
+
+{% if favorite_players|length > 0 %}
+
 <h2>Your favorites:</h2>
 
     
@@ -12,16 +16,23 @@
 
     {% for player in favorite_players%}
 
+
     <div class="card" style="width: 18rem;">
       <img src={{ player["profile_picture"] }} class="card-img-top" onerror="this.src='/static/blank-profile-picture.png'">
       <div class="card-body">
         <a href="/athletes/{{ player["athlete_id"] }}" class="profile-button btn btn-primary" onclick="showLoader()">{{player["name"]}}</a>
       </div>
     </div>
-
+    
     {% endfor %}
   </div>
 
+{% else %}
+
+<h3>You currently have no favorites</h3>
+
+
+{% endif %}
 
 
  </div>

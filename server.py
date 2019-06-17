@@ -86,9 +86,7 @@ def display_search_page():
             player_info = player[0]
             favorite_players.append(player_info)
     else:
-        favorite_players = [{"athlete_id": 12606, 
-        "name": "No Favs Yet, Click for T.Brady", 
-        "profile_picture": '/static/blank-profile-picture.png'}]
+        favorite_players = []
 
 
     return render_template('searchpage.html',
