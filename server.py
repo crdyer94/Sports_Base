@@ -132,6 +132,7 @@ def update_favorites():
     in the session as a favorite"""
 
     check_favorite = Favorite.query.filter(Favorite.favorited_item==session["athlete_id"]).first()
+    route = f'/athletes/{session["athlete_id"]}'
 
     if check_favorite is None:
         new_update  = Favorite(id=current_user.id, favorited_item=session["athlete_id"])
@@ -142,8 +143,7 @@ def update_favorites():
        
     db.session.commit()
     
-    return display_athlete_info(session["athlete_id"])
-
+    return redirect(route)
 @app.route('/logout')
 @login_required
 def logout():

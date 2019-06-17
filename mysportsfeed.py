@@ -63,7 +63,6 @@ def get_search_results(playername):
 
     api_playername = modify_entered_playername(playername)
 
-    # try:
     response = my_sports_feed_players_api(api_playername)
 
     response_display = []
@@ -80,14 +79,6 @@ def get_search_results(playername):
 
         response_display.append(athlete_route)
 
-    return response_display
-
-
-def handle_bad_player_search_response():
-    
-    response_display = []
-    error_athlete = {"Error": "Sorry, no NFL players found"}
-    response_display.append(error_athlete)
     return response_display
 
 def get_athlete_info(athlete_id):
@@ -124,6 +115,19 @@ def get_athlete_info(athlete_id):
 
     return player_profile
 
+def get_api_stats(available_season, athlete_id):
+    """Gets the semi-parsed out stat data from the mysportsfeed api"""
+    Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
+    response = requests.get(SPORTSFEED_URL + f"{available_season}/player_stats_totals.json?player={athlete_id}",
+             auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
+    response=response.json() 
+
+    api_playerStatTotals = response.get("playerStatsTotals")[0] 
+
+    api_season_stats = api_playerStatTotals.get("stats")
+
+    return api_season_stats
+
 
 def get_stats(athlete_id):
     """Gets the player's stats from API"""
@@ -156,16 +160,9 @@ def get_stats(athlete_id):
 
     for available_season in available_seasons:
 
+        api_season_stats = get_api_stats(available_season, athlete_id)
+
     
-        Authorization: Basic [MYSPORTSFEED_TOKEN + ":" + MYSPORTSFEED_PASS]
-        response = requests.get(SPORTSFEED_URL + f"{available_season}/player_stats_totals.json?player={athlete_id}",
-             auth=HTTPBasicAuth(MYSPORTSFEED_TOKEN, MYSPORTSFEED_PASS))
-        response=response.json() #this is a dictionary
-
-        api_playerStatTotals = response.get("playerStatsTotals")[0] #something to do: json binding in python --> LOOK IT UP
-
-        api_season_stats = api_playerStatTotals.get("stats")
-
         for category in available_stat_categories:
             specific_stats = api_season_stats.get(category[0])
             
@@ -192,26 +189,7 @@ def get_stats(athlete_id):
     return career_stats
 
 
-    try:
-   
-        response = requests.get(
-                f'http://nflarrest.com/api/v1/player/arrests/{player_name}', 
-                headers={'user-agent': 'Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0'})
 
-        api_player_arrest_information = response.json()[0]
-        player_arrest_information = { 
-                                "Arrest Date" : api_player_arrest_information.get("Date"),
-                                "Crime Category" : api_player_arrest_information.get("Crime_category") 
-                                + ": " + api_player_arrest_information.get("Category"), 
-                                "Description": api_player_arrest_information.get("Description"),
-                                "Outcome": api_player_arrest_information.get("Outcome")
-                                                }
-        return player_arrest_information
-    except Exception:
-        player_arrest_information = handle_bad_arrest_response()
-        return player_arrest_information
+    
 
 
-def handle_bad_arrest_response():
-
-    return "No arrests for this player"

@@ -52,10 +52,9 @@ def handle_bad_arrest_response():
     """Handles responses for players that do not have any arrests"""
     
     arrest_error_response = { 
-                                "Arrest Date" : "None",
-                                "Crime Category" : "None"
-                                + ": " + "None", 
+                                "Arrest Date" : "",
+                                "Crime Category" : "",
                                 "Description": "No arrests found for this player",
-                                "Outcome": "None"
+                                "Outcome": ""
                                                 }
     return arrest_error_response

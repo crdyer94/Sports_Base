@@ -39,10 +39,3 @@ function showArrests() {
     x.style.display = "none";
   }
 }
-
-function updatefavs() {
-  console.log("Hey this is being called")
-  var x = document.getElementById("fav_button").addEventListener('click', 
-    function() {let url = "/updatefavorites"; window.location = url;})
-
-}
