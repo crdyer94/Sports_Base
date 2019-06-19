@@ -15,12 +15,12 @@ APIs: mysportsfeed, NFL Arrests, Twitter<br/>
 
 ## <a name="features"></a>Features
 
-###Login 
+### Login 
 The users can register or login from the login page. Signing up allows the user's information to be saved in the database.
 
 ![Login](/Screenshots/loginpage.jpg)
 
-###Homepage
+### Homepage
 The user is forwarded to the homepage. The homepage displays that user's favorited players. Clicking one of these players will directly route the user to that athlete's profile.
 
 ![Homepage](/Screenshots/homepage.jpg)
