@@ -15,12 +15,12 @@ APIs: mysportsfeed, NFL Arrests, Twitter<br/>
 
 ## <a name="features"></a>Features
 
-####Login 
+###Login 
 The users can register or login from the login page. Signing up allows the user's information to be saved in the database.
 
 ![Login](/Screenshots/loginpage.jpg)
 
-####Homepage
+###Homepage
 The user is forwarded to the homepage. The homepage displays that user's favorited players. Clicking one of these players will directly route the user to that athlete's profile.
 
 ![Homepage](/Screenshots/homepage.jpg)
@@ -29,7 +29,7 @@ As the profile loads, a graphic displays
 
 ![Loading](/Screenshots/loading.jpg)
 
-####Athlete Profile
+###Athlete Profile
 The athlete profile page shows the bio information, recent career stats, recent tweets, and any arrest records. The athlete bio info and the career stats are pulled from the mysportsfeed API.
 
 ![Profile](/Screenshots/athleteprofile.jpg)
@@ -43,7 +43,7 @@ The arrest records are pulled from the NFL Arrests API.
 ![Arrests](/Screenshots/showarrests.jpg)
 
 
-####Player Search
+###Player Search
 The search bar to search for players is available on every page of Sports Base. The search results shows the direct routes to the athlete's profile. All the data shown is pulled from the mysportsfeed API.
 
 ![Player Search](/Screenshots/searchresults.jpg)
