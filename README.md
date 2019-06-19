@@ -29,7 +29,7 @@ As the profile loads, a graphic displays
 
 ![Loading](/Screenshots/loading.jpg)
 
-###Athlete Profile
+### Athlete Profile
 The athlete profile page shows the bio information, recent career stats, recent tweets, and any arrest records. The athlete bio info and the career stats are pulled from the mysportsfeed API.
 
 ![Profile](/Screenshots/athleteprofile.jpg)
@@ -43,12 +43,10 @@ The arrest records are pulled from the NFL Arrests API.
 ![Arrests](/Screenshots/showarrests.jpg)
 
 
-###Player Search
+### Player Search
 The search bar to search for players is available on every page of Sports Base. The search results shows the direct routes to the athlete's profile. All the data shown is pulled from the mysportsfeed API.
 
 ![Player Search](/Screenshots/searchresults.jpg)
-
-
 
 
 ## <a name="install"></a>Installation
