@@ -74,6 +74,49 @@ Install the dependencies:
 pip install -r requirements.txt
 ```
 
+There is an error in a file in the env folder. Please go to env/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/wtf.html.
+
+On line 36, update the word required to a string in the if statement.
+```
+{% if field.flags.required and not required in kwargs %}
+```
+This should be your change:
+```
+{% if field.flags.required and not 'required' in kwargs %}
+```
+
+Sign up to use the [mysportsfeed API](https://www.mysportsfeeds.com/data-feeds/api-docs/) and the [Twitter API](https://developer.twitter.com/en/docs). The [NFL Arrests API](http://nflarrest.com/api/) is an open API.
+
+Save your API keys in a file called <kbd>secrets.sh</kbd> using this format:
+```
+export MYSPORTSFEED_TOKEN="YOUR KEY HERE"
+export MYSPORTSFEED_PASS="YOUR KEY HERE"
+
+export TWITTER_CONSUMER="YOUR KEY HERE"
+export TWITTER_CONSUMER_SECRET="YOUR KEY HERE"
+export TWITTER_ACCESS="YOUR KEY HERE"
+export TWITTER_ACCESS_SECRET="YOUR KEY HERE"
+```
+
+Source your keys from your secrets.sh file into your virtual environment:
+```
+source secrets.sh
+```
+
+Set up the database:
+```
+createdb sportsbase
+python -i model.py
+db.create_all()
+```
+
+Run the app:
+```
+python server.py
+```
+
+You can now navigate to 'localhost:5000/' to access Sports Base
+
 
 ## <a name="aboutme"></a>About Me
 Camille Dyer is a Software Engineer in the Bay Area; this is her first project.
